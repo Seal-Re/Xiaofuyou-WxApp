@@ -1,0 +1,194 @@
+/* pages/setting/setting.wxss */
+
+/* --- 自定义顶部导航栏样式 --- */
+.custom-navbar {
+  position: fixed; /* 固定在顶部 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px; /* 固定总高度，例如：状态栏44px + 内容区44px */
+  background-color: #fff; /* 白色背景，与订单页面一致 */
+  display: flex;
+  /* 关键：使用 padding-top 为状态栏预留空间，让内容区从44px开始 */
+  padding-top: 44px; /* 假设状态栏高度为44px，为iPhone刘海屏预留 */
+  box-sizing: border-box; /* 确保 padding 包含在 height 内 */
+  
+  /* 调整这里：让导航栏的实际内容（返回按钮和标题）在水平和垂直方向上居中 */
+  align-items: center;   /* 使 flex 子项（图片和文本）在 flex 容器（导航栏内容区）中垂直居中 */
+  justify-content: center; /* 使 flex 子项在 flex 容器中水平居中 (主要是标题) */
+  
+  padding-left: 30rpx; /* 保持左侧内边距 */
+  padding-right: 30rpx; /* 保持右侧内边距 */
+  z-index: 100; /* 确保在其他内容之上，防止被覆盖 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 细微阴影 */
+  /* 移除原本的半透明深色背景和复杂的 padding-bottom */
+}
+
+/* 返回按钮 */
+.back-button { /* 注意：这里类名从 back-arrow 改为 back-button，与 WXML 对应 */
+  position: absolute; /* 绝对定位 */
+  left: 30rpx; /* 距离左侧边距 */
+  width: 48rpx; /* 返回图标的宽度 */
+  height: 48rpx; /* 返回图标的高度 */
+  padding: 10rpx; /* 增加点击区域，便于点击 */
+  
+  /* 关键调整：计算按钮的垂直位置，使其在 **导航栏内容区域** 垂直居中 */
+  /* 导航栏内容区域的高度是 (总高度 - padding-top) = (88px - 44px) = 44px */
+  /* 按钮高度 48rpx (小程序默认 2rpx = 1px，所以 48rpx = 24px) */
+  /* 所以，它距离整个 custom-navbar 顶部的距离就是 padding-top + (内容区高度 / 2) - (按钮高度 / 2) */
+  top: calc(44px + (44px / 2) - (48rpx / 2)); /* 44px(状态栏预留) + (44px/2 - 24rpx/2) (在内容区居中) */
+  /* 简化为常用的经验值，通常能让按钮在刘海屏下也显得居中且不被遮挡 */
+  /* top: 50px; 也可以直接用这个固定值，通常效果也不错 */
+  
+  flex-shrink: 0; /* 防止图标被压缩 */
+  z-index: 101; /* 确保在标题之上 */
+}
+
+.navbar-title {
+  font-size: 36rpx; /* 与订单页面标题大小一致 */
+  font-weight: bold;
+  color: #333; /* 导航栏文字颜色 */
+  /* 标题因为 custom-navbar 的 justify-content: center 而水平居中，
+     因为 align-items: center 也会在 padding-top 后的区域垂直居中。
+     这里不需要额外的 flex-grow 或 line-height，除非你需要微调 */
+}
+
+
+/* --- 页面主体容器 --- */
+.container {
+  padding: 0; /* 移除 padding，让 .row 可以全宽 */
+  background-color: #f8f8f8; /* 页面背景色 */
+  /* 关键调整: padding-top = 导航栏总高度 + 额外的20rpx间距 */
+  padding-top: calc(88px + 20rpx); /* 确保内容在导航栏下方显示 */
+  padding-left: 20rpx; /* 保持左右内边距 */
+  padding-right: 20rpx; /* 保持左右内边距 */
+  padding-bottom: 20rpx; /* 保持底部内边距 */
+  box-sizing: border-box;
+  /* min-height 需要根据新的顶部导航栏高度和底部按钮区域高度重新计算 */
+  min-height: calc(100vh - 88px - 200rpx); /* 100vh - 顶部导航栏总高度 - 底部固定区域高度 */
+}
+
+/* 每行设置项 */
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+  font-size: 30rpx;
+  color: #333;
+}
+
+/* 圆角和边框调整，使第一行和最后一行看起来像一个整体的卡片 */
+.container > .row:first-of-type {
+  border-top-left-radius: 16rpx;
+  border-top-right-radius: 16rpx;
+  margin-top: 20rpx; /* 与顶部导航栏的间距 */
+  overflow: hidden;
+  border-top: none;
+}
+
+.container > .row:last-of-type {
+  border-bottom-left-radius: 16rpx;
+  border-bottom-right-radius: 16rpx;
+  margin-bottom: 20rpx; /* 与下方按钮的间距 */
+  border-bottom: none;
+  overflow: hidden;
+}
+
+/* 左侧文本（用户名/床号） */
+.row text {
+  font-size: 32rpx;
+  color: #666666;
+  line-height: normal;
+  flex-shrink: 0;
+}
+
+/* 右侧容器 */
+.right {
+  display: flex;
+  align-items: center;
+}
+
+/* 静态展示文本 */
+.static-text {
+  font-size: 28rpx;
+  color: #111111;
+  line-height: normal;
+  margin-right: 15rpx;
+}
+
+/* 输入框样式 */
+.edit-input {
+  font-size: 28rpx;
+  border: 1rpx solid #ccc;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  width: 300rpx;
+  text-align: right;
+  background-color: #f5f5f5;
+  color: #111;
+  box-sizing: border-box;
+}
+
+/* 右侧箭头样式 */
+.arrow-right {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.6;
+  margin-left: 10rpx;
+}
+
+
+/* --- 底部操作按钮区域 --- */
+.logout-fixed {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding-bottom: env(safe-area-inset-bottom); /* 适配底部安全区 */
+  background-color: #f8f8f8;
+  padding-top: 20rpx;
+  box-sizing: border-box;
+  z-index: 99;
+  display: flex;
+  justify-content: center; /* 按钮组水平居中，因为只有一个按钮了 */
+  align-items: center;
+  height: 140rpx; /* 调整底部固定区域高度，因为少了一个按钮，可以适当减小 */
+  box-shadow: 0 -2rpx 4rpx rgba(0, 0, 0, 0.05);
+}
+
+.button-group {
+  display: flex;
+  /* justify-content: center; /* 只有一个按钮时，让它居中 */
+  width: 80%;
+  height: 100rpx;
+}
+
+.action-button {
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  border-radius: 50rpx;
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  /* flex: 1; /* 只有一个按钮时，可以不设置 flex: 1，或者设置 flex: none; width: auto; */
+  margin: 0; /* 移除左右间距，因为只有一个按钮 */
+}
+
+.logout-button {
+  background-color: #ff6699;
+  border: 2rpx solid #ff6699;
+  box-shadow: 0 8rpx 16rpx rgba(255, 102, 153, 0.3);
+  width: 100%; /* 让退出登录按钮占据 button-group 的全部宽度 */
+}
+
+/* 移除 back-button 的样式，因为它已经移动到顶部导航栏 */
+/* .back-button {
+  background-color: #6c757d;
+  border: 2rpx solid #6c757d;
+  box-shadow: 0 8rpx 16rpx rgba(108, 117, 125, 0.3);
+} */

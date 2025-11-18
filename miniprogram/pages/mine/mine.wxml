@@ -1,0 +1,66 @@
+<view class="container">
+  <view class="top-banner">
+    <image class="banner-img" src="{{bannerImageUrl}}" mode="aspectFill" />
+
+    <view class="avatar-box">
+      <image class="avatar" src="{{avatar || '/images/mine/note.png'}}" />
+      <text class="nickname" bindtap="{{!logged ? 'login' : ''}}">
+        {{ displayNick || '登录/注册>' }}
+      </text>
+      <image
+        class="qrcode-icon"
+        src="/images/mine/QrCode.png"  mode="aspectFit"
+        bindtap="scanQrCode"
+      />
+    </view>
+  </view>
+
+  <view class="welcome-block">
+    <view class="top-area">
+      <text class="welcome-text">
+        {{ logged ? welcomeText : '欢迎~小福佑新朋友' }}
+      </text>
+    </view>
+
+    <view class="middle-area">
+      <view class="note-info">
+        <text class="note-count">{{ noteCount }}</text>
+        <image class="note-icon" src="/images/mine/note.png" mode="aspectFit"></image>
+      </view>
+      <text class="signin-text" bindtap="goToSignin">前往签到，获取音符></text>
+    </view>
+
+    <view class="bottom-area">
+      <view class="progress-bar-container">
+        <view class="progress-bar" style="width: {{progress}}"></view>
+      </view>
+    </view>
+  </view>
+
+  <view class="feature-list">
+    <view class="feature-item" bindtap="goOrder">
+      <image src="/images/mine/order.png" class="feature-icon" />
+      <text class="feature-label">订单</text>
+    </view>
+
+    <view class="feature-item" bindtap="goNote">
+      <image src="/images/mine/note.png" class="feature-icon" />
+      <text class="feature-label">我的乐符</text>
+    </view>
+
+    <view class="feature-item" bindtap="goMyQrCode">
+      <image src="/images/mine/QrCode.png" class="feature-icon" />
+      <text class="feature-label">我的二维码</text>
+    </view>
+
+    <view class="feature-item" bindtap="goSetting">
+      <image src="/images/mine/setting.png" class="feature-icon" />
+      <text class="feature-label">设置</text>
+    </view>
+  </view>
+
+  <view wx:if="{{WaitingLog}}" class="waiting-toast">
+    <text>登录中...</text>
+  </view>
+
+</view>

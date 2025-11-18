@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="qr-code-container">
+    <image src="{{qrCodeImage}}" mode="widthFix" wx:if="{{qrCodeImage}}" />
+    <text wx:else>正在生成二维码...</text>
+  </view>
+</view>

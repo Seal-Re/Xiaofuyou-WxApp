@@ -1,0 +1,420 @@
+/* pages/home/home.wxss */
+
+.container {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    height: 100vh; /* 占据整个视口高度 */
+    background-color: #F7F8FA;
+    position: relative;
+}
+
+
+/* 页面背景图 (如果需要) */
+.page-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+/* --- 自定义顶部导航栏样式 --- */
+.custom-navbar {
+    flex-shrink: 0; /* 防止导航栏被压缩，固定高度 */
+    display: flex;
+    width: 100%;
+    height: 180rpx; /* 保持导航栏高度 */
+    background-color: rgba(48, 69, 114, 0.9);
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    box-sizing: border-box;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 30rpx 20rpx 30rpx;
+    position: relative;
+}
+
+.navbar-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    background-color: #eee;
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.navbar-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #fff;
+    flex-grow: 1;
+    text-align: center;
+    line-height: 80rpx;
+    margin-right: 80rpx;
+    padding-left: 30rpx;
+}
+  
+
+/* --- banner 轮播图 (固定在顶部，不随内容滚动) --- */
+.banner-swiper {
+    flex-shrink: 0; /* 确保轮播图不会被压缩，保持固定高度 */
+    width: 95%; /* 与内容区域保持一致的宽度 */
+    height: 300rpx; /* 固定高度 */
+    border-radius: 16rpx;
+    overflow: hidden;
+    margin-top: 30rpx; /* 与导航栏的间距 */
+    margin-bottom: 30rpx; /* 与下方滚动内容的间距 */
+    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+    align-self: center; /* 在 flex 容器中水平居中 */
+}
+
+.swiper-inner { /* swiper 组件内部的样式，如果需要 */
+    width: 100%;
+    height: 100%;
+}
+
+.swiper-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.scrollable-content {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* --- 签到卡片样式 --- */
+.sign-in-card {
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    border-radius: 20rpx;
+    margin: 0 30rpx 40rpx; /* 底部间距增加 */
+    padding: 35rpx 40rpx;
+    box-shadow: 0 8rpx 20rpx rgba(255, 165, 0, 0.3);
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+    width: calc(100% - 60rpx);
+    box-sizing: border-box;
+    z-index: 1;
+    flex-shrink: 0; /* 防止被压缩 */
+}
+
+.sign-in-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25rpx;
+}
+
+.sign-in-icon {
+    width: 50rpx;
+    height: 50rpx;
+    margin-right: 15rpx;
+}
+
+.sign-in-title {
+    font-size: 38rpx;
+    font-weight: bold;
+    margin-right: auto;
+}
+
+.sign-in-note-count {
+    font-size: 30rpx;
+    font-weight: 500;
+}
+
+.sign-in-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30rpx;
+}
+
+.sign-in-status, .sign-in-streak {
+    font-size: 32rpx;
+    font-weight: 400;
+}
+
+.sign-in-button {
+    width: 260rpx;
+    height: 80rpx;
+    line-height: 80rpx;
+    background-color: #fff;
+    color: #FFA500;
+    font-size: 34rpx;
+    font-weight: bold;
+    border-radius: 40rpx;
+    align-self: flex-end;
+    margin-left: auto;
+    box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+.sign-in-button[disabled] {
+    background-color: #f0f0f0;
+    color: #ccc;
+}
+
+
+/* --- 活动列表标题 --- */
+.section-title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 30rpx 30rpx; /* 保持与活动卡片的左右对齐 */
+    width: calc(100% - 60rpx);
+    box-sizing: border-box;
+    flex-shrink: 0; /* 防止被压缩 */
+}
+
+.section-title {
+    font-size: 38rpx;
+    font-weight: bold;
+    color: #333;
+}
+
+.view-more {
+    font-size: 28rpx;
+    color: #999;
+}
+
+
+/* --- 活动图片列表 --- */
+.activity-list {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30rpx;
+    padding: 0 30rpx;
+    box-sizing: border-box;
+    /* 不再需要 flex: 1，由 scrollable-content 整体滚动 */
+}
+
+.activity-card {
+    background-color: #fff;
+    border-radius: 20rpx;
+    overflow: hidden;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: row;
+    padding: 30rpx;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    flex-shrink: 0; /* 确保卡片不会被压缩 */
+}
+
+.activity-image {
+    width: 225rpx;
+    height: 375rpx;
+    object-fit: cover;
+    border-radius: 10rpx;
+    margin-right: 30rpx;
+    flex-shrink: 0;
+}
+
+.activity-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+    position: relative;
+    height: 290rpx;
+    padding-bottom: 80rpx;
+}
+
+.activity-type-tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 5rpx 15rpx;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #fff;
+    font-weight: bold;
+    z-index: 5;
+}
+
+.activity-type-tag.online-tag {
+    background-color: #4CAF50;
+}
+
+.activity-type-tag.offline-tag {
+    background-color: #FF7043;
+}
+
+.activity-title {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10rpx;
+    margin-right:10rpx;
+    padding: 10rpx;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.4;
+    margin-top: 50rpx;
+}
+
+.activity-time, .activity-address {
+    display: flex;
+    align-items: center;
+    font-size: 28rpx;
+    color: #666;
+    margin-bottom: 10rpx;
+    line-height: 1.3;
+}
+
+.activity-address {
+    margin-bottom: 0;
+}
+
+.icon-small {
+    width: 32rpx;
+    height: 32rpx;
+    margin-right: 15rpx;
+    flex-shrink: 0;
+}
+
+.register-button {
+    width: 30%;
+    margin-left:50%;
+    margin-bottom: 20rpx; 
+    height: 70rpx;
+    line-height: 70rpx;
+    background-color: #27eebccc;
+    color: rgb(0, 0, 0);
+    font-size: 30rpx;
+    font-weight: bold;
+    border-radius: 10rpx;
+    text-align: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+/* --- 侧边抽屉包裹层和遮罩样式 --- */
+.drawer-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 999;
+    transform: translateX(-100%);
+    display: flex;
+    pointer-events: none;
+    transition: background-color 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.drawer-wrapper.show {
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateX(0);
+}
+
+mine-drawer {
+    width: 75vw;
+    height: 100vh;
+    background-color: #fff;
+}
+
+/* --- 弹窗样式 --- */
+.popup-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    width: 80vw;
+    max-width: 600rpx;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40rpx;
+    border-radius: 20rpx;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.popup-background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.9;
+    filter: blur(2rpx);
+}
+
+.popup-logo {
+    width: 120rpx;
+    height: 120rpx;
+    margin-bottom: 20rpx;
+    z-index: 2;
+}
+
+.popup-text {
+    font-size: 38rpx;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 30rpx;
+    z-index: 2;
+    text-shadow: 1rpx 1rpx 2rpx rgba(255, 255, 255, 0.7);
+}
+
+.popup-date-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40rpx;
+    z-index: 2;
+}
+
+.popup-weekday-image {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 15rpx;
+}
+
+.popup-date-text {
+    font-size: 32rpx;
+    color: #555;
+    font-weight: 500;
+}
+
+.popup-close-button {
+    width: 80rpx;
+    height: 80rpx;
+    position: absolute;
+    top: 20rpx;
+    right: 20rpx;
+    z-index: 3;
+}

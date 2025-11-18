@@ -1,0 +1,50 @@
+<view class="container">
+  <view class="custom-navbar">
+    <image class="back-button" src="/images/utils/leftarrow.png" mode="aspectFit" bindtap="onBackTap"></image>
+    <text class="navbar-title">设置</text>
+  </view>
+
+  <view class="row" catchtap="noop">
+    <text>用户名</text>
+    <view class="right">
+      <block wx:if="{{nickEditing}}">
+        <input value="{{volunteerInfo.nick}}"
+               bindinput="onNickChange"
+               placeholder="请输入新昵称"
+               confirm-type="done"
+               bindconfirm="confirmUpdateNick"
+               focus="true"
+               class="edit-input" />
+      </block>
+      <block wx:else>
+        <text class="static-text" bindtap="nickChangeToEdit">{{volunteerInfo.displayNick || '未设置'}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="row" catchtap="noop">
+    <text>手机号</text>
+    <view class="right">
+      <block wx:if="{{phoneNumberEditing}}">
+        <input value="{{volunteerInfo.phoneNumber}}"
+               bindinput="onPhoneNumberChange"
+               placeholder="请输入手机号"
+               confirm-type="done"
+               bindconfirm="confirmUpdatePhoneNumber"
+               focus="true"
+               class="edit-input" />
+      </block>
+      <block wx:else>
+        <text class="static-text" bindtap="phoneNumberChangeToEdit">{{volunteerInfo.phoneNumber || '未绑定'}}</text>
+        <image src="/images/component/arrow_right.png" class="arrow-right" />
+      </block>
+    </view>
+  </view>
+
+</view>
+
+<view class="logout-fixed">
+  <view class="button-group">
+    <view class="action-button logout-button" bindtap="logout">退出登录</view>
+  </view>
+</view>

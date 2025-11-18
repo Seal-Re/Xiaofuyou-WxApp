@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "mine-drawer": "/pageVolunteer/mine/mine" ,
+    "custom-tab-bar": "/custom-tab-bar/index" 
+  },
+  "navigationStyle": "custom"
+}

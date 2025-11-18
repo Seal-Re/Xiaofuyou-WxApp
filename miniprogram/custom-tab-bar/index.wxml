@@ -1,0 +1,15 @@
+<view class="tab-bar">
+  <view class="tab-bar-main" wx:if="{{indicator === 0}}">
+    <view class="tab-bar-item" wx:for="{{list1}}" wx:key="index" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+      <image class="tab-bar-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+      <view class="tab-bar-text" style="color: {{selected === index ? '#FF5722' : '#333333'}}">{{item.text}}</view>
+    </view>
+  </view>
+
+  <view class="tab-bar-main" wx:if="{{indicator === 1}}">
+    <view class="tab-bar-item" wx:for="{{list2}}" wx:key="index" data-path="{{item.pagePath}}" data-index="{{index}}" bindtap="switchTab">
+      <image class="tab-bar-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></image>
+      <view class="tab-bar-text" style="color: {{selected === index ? '#FF5722' : '#333333'}}">{{item.text}}</view>
+    </view>
+  </view>
+</view>

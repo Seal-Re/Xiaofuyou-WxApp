@@ -1,0 +1,9 @@
+<view class="container">
+  <image src="{{backgroundImage}}" class="background-image" mode="aspectFill"></image>
+
+  <view class="button-area">
+    <image src="{{button1Icon}}" class="button-icon" mode="aspectFill" bindtap="goToPage1" />
+    <image src="{{button2Icon}}" class="button-icon" mode="aspectFill" bindtap="goToPage2" />
+    <image src="{{button3Icon}}" class="button-icon" mode="aspectFill" bindtap="goToPage3" />
+  </view>
+</view>

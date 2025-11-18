@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: relative; /* Essential for absolute positioning of background image */
+  }
+  
+  .background-image {
+    position: absolute; /* Position relative to the container */
+    bottom: 0; /* Align to the bottom of the container */
+    width: 100%;
+    height: 100%; /* Make it cover the entire page height */
+    z-index: -1; /* Ensure it stays behind other content */
+  }
+  
+  .button-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* Push content to the bottom of this area */
+    height: 100vh; /* Make button-area fill the height to properly position content */
+    width: 80%;
+    box-sizing: border-box;
+    padding-bottom: 30rpx; /* Add some padding from the very bottom of the screen */
+    gap: 10rpx; /* Spacing between buttons */
+  }
+  
+  .button-icon {
+    width: 100%; /* Take full width of the button-area (80vw) */
+    height: 160rpx;
+    border-radius: 12rpx;
+    overflow: hidden;
+  }

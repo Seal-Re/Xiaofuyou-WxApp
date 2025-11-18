@@ -1,0 +1,105 @@
+<!-- 加载动画容器 -->
+<view wx:if="{{!isLoaded}}" class="loading-container">
+  <image src="/images/loading/image.gif" class="loading-gif" mode="aspectFit" />
+  <view class="loading-text {{loadingTextClass}}">加载中...</view>
+</view>
+
+
+<!-- 正常内容展示 -->
+<view wx:else>
+    <view class="container">
+    <!-- 顶部固定栏 -->
+    <view class="fixed-header">
+    <text class="user-text">当前用户:</text>
+
+    <!-- 如果 nick 为空，显示未登录提示并支持点击跳转 -->
+    <view wx:if="{{!nick}}" bindtap="goToMine" class="nickname-text clickable">
+        用户未登录（点击登录）
+    </view>
+
+    <!-- 如果已登录，显示 nick 和床号 -->
+    <block wx:if="{{nick}}">
+        <text class="nickname-text">{{ nick }}</text>
+        <text class="bed-text">床号:</text>
+        <text class="bedID-text">{{ bedId ? bedId : "未绑定" }}</text>
+    </block>
+    </view>
+
+
+
+    <!-- 左侧分类导航 -->
+    <scroll-view 
+        class="category-bar" 
+        scroll-y
+        scroll-with-animation
+        scroll-into-view="{{scrollToId}}"
+        enable-flex
+    >
+        <view 
+        wx:for="{{categories}}" 
+        wx:key="id"
+        class="category-item {{activeCategoryId === item.id ? 'active' : ''}}"
+        bindtap="switchCategory"
+        data-id="{{item.id}}"
+        >
+        <image class="category-icon" src="{{item.icon}}" mode="aspectFit" wx:if="{{item.icon}}"></image>
+        <text>{{item.name}}</text>
+        </view>
+    </scroll-view>
+    
+    <!-- 右侧菜品列表 -->
+    <scroll-view 
+        class="dishes-container" 
+        scroll-y
+        scroll-with-animation
+        scroll-top="{{scrollTop}}"
+        bindscroll="onDishesScroll"
+    >
+        <view wx:for="{{categories}}" wx:key="id" class="category-section" id="category-{{item.id}}">
+        <view class="category-title">{{item.name}}</view>
+        
+        <view class="dishes-list">
+            <view 
+            wx:for="{{dishesByCategory[item.id]}}" 
+            wx:for-item="dish"
+            wx:key="id" 
+            class="dish-item"
+            >
+            <image class="dish-image" src="{{dish.imageUrl}}" mode="aspectFill" binderror="onImageError" data-id="{{dish.id}}" bindtap="showLargeImage" data-image="{{dish.imageUrl}}"></image>
+            <view class="no-image-text" wx:if="{{dish.useDefaultImage}}">马上就有图啦</view>
+            <view class="dish-info">
+                <view class="dish-name">{{dish.name}}</view>
+            </view>
+            <view class="add-button" catchtap="addToCart" data-dish="{{dish}}">
+                <view class="plus-icon">+</view>
+            </view>
+            </view>
+        </view>
+        </view>
+    </scroll-view>
+    
+    <!-- 右下角悬浮购物车按钮 -->
+    <view class="cart-bar" bindtap="goToCart">
+        <view class="cart-icon-wrapper">
+        <view class="cart-icon {{cartCount > 0 ? 'has-items' : ''}}"></view>
+        <view class="cart-count" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+        </view>
+        <view class="cart-text">购物车</view>
+    </view>
+
+    <!-- 自定义Toast -->
+    <view class="custom-toast {{showToast ? 'show' : ''}}">
+        {{toastMessage}}
+    </view>
+
+    <!-- 飞入购物车动画元素 -->
+    <view class="flying-item" wx:if="{{showFlyAnimation}}" style="left: {{flyAnimationData.x}}px; top: {{flyAnimationData.y}}px;">
+        +1
+    </view>
+
+    <!-- 大图预览 -->
+    <view class="large-image-container" wx:if="{{showLargeImage}}" bindtap="closeLargeImage">
+        <image class="large-image" src="{{currentLargeImage}}" mode="aspectFit" catchtap=""></image>
+    </view>
+    </view>
+</view>

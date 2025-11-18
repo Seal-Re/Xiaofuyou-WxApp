@@ -1,0 +1,86 @@
+{
+    "pages": [
+      "packageChioce/pages/choice/choice",
+      "pages/home/home",
+      "pages/index/index",
+      "pages/menu/menu",
+      "pages/mine/mine",
+      "pages/myQrCode/myQrCode",
+      "pages/voicebox/voicebox",
+      "pages/broadcast/broadcast",
+      "packageB/pages/setting/setting",
+      "packageChioce/pages",
+      "custom-tab-bar/index",
+      "pageVolunteer/home/home",
+      "pageVolunteer/mine/mine",
+      "pageVolunteer/confirm/confirm",
+      "pageVolunteer/setting/setting"
+    ],
+    "subpackages": [
+      {
+        "root": "packageA",
+        "pages": [
+          "pages/cart/cart",
+          "pages/order-success/order-success"
+        ]
+      }
+    ],
+    "window": {
+      "backgroundTextStyle": "light",
+      "navigationBarBackgroundColor": "#FFC0CB",
+      "navigationBarTitleText": "小福佑",
+      "navigationBarTextStyle": "white",
+      "backgroundColor": "#FFF6F6",
+      "navigationStyle": "custom"
+    },
+    "usingComponents": {
+      "van-button": "miniprogram_npm/@vant/weapp/button/index",
+      "van-tab": "miniprogram_npm/@vant/weapp/tab/index",
+      "van-tabs": "miniprogram_npm/@vant/weapp/tabs/index",
+      "van-icon": "miniprogram_npm/@vant/weapp/icon/index",
+      "van-stepper": "miniprogram_npm/@vant/weapp/stepper/index",
+      "van-field": "miniprogram_npm/@vant/weapp/field/index"
+    },
+    "lazyCodeLoading": "requiredComponents",
+    "sitemapLocation": "sitemap.json",
+    "cloud": true,
+    "tabBar": {
+      "custom": true,
+      "color": "#333333",
+      "selectedColor": "#FF5722",
+      "backgroundColor": "#FFFFFF",
+      "borderStyle": "black",
+      "list": [
+        {
+          "pagePath": "pages/home/home",
+          "text": "首页", 
+          "iconPath": "images/tabbar/home.png",
+          "selectedIconPath": "images/tabbar/home-active.png"
+        },
+        {
+          "pagePath": "pages/index/index",
+          "text": "点单",
+          "iconPath": "images/tabbar/order.png",
+          "selectedIconPath": "images/tabbar/order-active.png"
+        },
+        {
+          "pagePath": "pages/voicebox/voicebox",
+          "text": "我想说",
+          "iconPath": "images/tabbar/micro.png",
+          "selectedIconPath": "images/tabbar/micro-active.png"
+        },
+        {
+          "pagePath": "pageVolunteer/home/home",
+          "text": "首页", 
+          "iconPath": "images/tabbar/home.png",
+          "selectedIconPath": "images/tabbar/home-active.png"
+        },
+        {
+          "pagePath": "pageVolunteer/mine/mine",
+          "text": "我的", 
+          "iconPath": "images/tabbar/mine.png",
+          "selectedIconPath": "images/tabbar/mine-active.png"
+        }
+      ]
+    }
+  }

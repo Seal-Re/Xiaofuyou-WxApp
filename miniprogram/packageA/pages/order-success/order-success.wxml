@@ -1,0 +1,35 @@
+<view class="success-container">
+  <view class="success-icon">
+    <van-icon name="passed" color="#FFC0CB" size="80px" />
+  </view>
+  
+  <view class="success-title">订单提交成功</view>
+  
+  <view class="order-info">
+    <view class="order-time">下单时间：{{orderTime}}</view>
+    
+    <view class="order-items">
+      <view class="items-title">点单内容：</view>
+      <view class="item" wx:for="{{orderItems}}" wx:key="id">
+        <text>{{item.name}}</text>
+        <text class="count">x{{item.count || 1}}</text>
+      </view>
+    </view>
+    
+    <view class="order-remark" wx:if="{{remark}}">
+      <view class="remark-title">备注：</view>
+      <view class="remark-content">{{remark}}</view>
+    </view>
+  </view>
+  
+  <view class="tip-text">已通知团队，请耐心等待～</view>
+  
+  <view class="btn-area">
+    <van-button type="primary" color="#FFC0CB" custom-class="home-btn" round block bindtap="backToHome">返回首页</van-button>
+  </view>
+
+  <!-- 自定义Toast -->
+  <view class="custom-toast {{showToast ? 'show' : ''}}">
+    {{toastMessage}}
+  </view>
+</view> 

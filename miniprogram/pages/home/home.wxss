@@ -1,0 +1,200 @@
+/* pages/home/home.wxss */
+
+/* 页面整体容器 */
+.container {
+    display: flex;
+    flex-direction: column; /* 垂直排列 */
+    height: 100vh;         /* 占满屏幕高度 */
+    overflow: hidden;      /* 防止整个页面滚动 */
+    background-color: #F7F8FA; /* 页面背景色，可自行调整 */
+    position: relative;
+  }
+  
+  /* 页面背景图 (如果需要) */
+  .page-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+  }
+  
+  /* --- 自定义顶部导航栏样式 --- */
+  .custom-navbar {
+    flex-shrink: 0; /* 防止导航栏被压缩 */
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding: 0 30rpx;
+    height: 180rpx;
+    background-color: rgba(48, 69, 114, 0.9);
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    box-sizing: border-box;
+  }
+  
+  .navbar-avatar {
+    margin-left: 60rpx;
+    margin-top: 60rpx;
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    background-color: #eee;
+  }
+  
+  .navbar-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #333;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  /* --- 页面内容包裹层 --- */
+  .content {
+    flex: 1; /* 占据导航栏之外的所有剩余垂直空间 */
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* 让轮播图和活动列表垂直堆叠 */
+    align-items: center;
+    overflow: hidden; /* 隐藏自身可能出现的滚动条，让子元素处理滚动 */
+    padding: 0; /* 移除内边距，交由子元素自己控制 */
+    box-sizing: border-box;
+  }
+  
+  /* --- banner 轮播图 (不允许移动) --- */
+  .banner-swiper {
+    width: 95%;
+    height: 300rpx;
+    border-radius: 16rpx;
+    overflow: hidden;
+    margin-top: 30rpx;
+    margin-bottom: 30rpx;
+    flex-shrink: 0; /* 重要：防止轮播图在任何情况下被压缩 */
+  }
+  
+  .swiper-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* --- 活动图片列表 (允许移动) --- */
+  .activity-list {
+    width: 100%;
+    flex: 1;               /* 占据 .content 内的剩余空间 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* 水平居中内部的图片 */
+    overflow-y: auto;      /* 关键：只为这个区域开启垂直滚动条 */
+    -webkit-overflow-scrolling: touch; /* 提升iOS滚动流畅度 */
+    padding-bottom: 30rpx; /* 滚动到底部时留出一些边距 */
+    box-sizing: border-box;
+  }
+  
+  .activity-item-image {
+    width: 95%;
+    height: 300rpx;
+    margin-bottom: 30rpx;
+    border-radius: 16rpx;
+    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+    background-color: #f0f0f0;
+    flex-shrink: 0; /* 关键：禁止图片项目收缩，强制其保持 300rpx 的高度 */
+  }
+  
+  /* --- 侧边抽屉包裹层和遮罩样式 --- */
+  .drawer-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 999;
+    transform: translateX(-100%);
+    display: flex;
+    pointer-events: none;
+    transition: background-color 0.3s ease-out, transform 0.3s ease-out;
+  }
+  
+  .drawer-wrapper.show {
+    pointer-events: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateX(0);
+  }
+  
+  mine-drawer {
+    width: 75vw;
+    height: 100vh;
+    background-color: #fff;
+  }
+  
+  /* --- 弹窗样式 --- */
+  .popup-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup-content {
+    width: 80%;
+    height: 60%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 40rpx;
+    border-radius: 20rpx;
+    color: #fff;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  
+  .popup-bottom-content {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    padding-bottom: 20rpx;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+  }
+  
+  .popup-week {
+    width: 240rpx;
+    height: 240rpx;
+    margin-bottom: 20rpx;
+    align-self: center;
+  }
+  
+  .popup-text {
+    font-size: 32rpx;
+    line-height: 1.5;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .scrollable-content {
+    flex: 1;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 120rpx); 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

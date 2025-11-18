@@ -1,0 +1,46 @@
+{
+  "name": "miniprogram-1",
+  "version": "1.0.0",
+  "description": "小福佑",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "cloud:install": "cd cloudfunctions/quickstartFunctions && npm install"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@babel/runtime": "^7.27.6",
+    "@vant/weapp": "^1.11.7",
+    "core-js": "^3.43.0"
+  },
+  "devDependencies": {
+    "babel-minify": "^0.5.2",
+    "imagemin": "^9.0.1",
+    "imagemin-webp": "^8.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "miniprogram-simulate": "^1.6.1",
+    "wx-server-sdk": "^3.0.1"
+  },
+  "cloudFunctionDependencies": {
+    "wx-server-sdk": "~2.4.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ],
+    "collectCoverageFrom": [
+      "miniprogram/**/*.js",
+      "!miniprogram/node_modules/**"
+    ]
+  }
+}

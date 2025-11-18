@@ -1,0 +1,57 @@
+<view class="container">
+  <view class="custom-navbar">
+    <!-- 顶部返回按钮 -->
+    <image class="back-button" src="/images/utils/leftarrow.png" mode="aspectFit" bindtap="onBackTap"></image>
+    <text class="navbar-title">设置</text>
+  </view>
+
+  <view wx:if="{{toastVisible}}" class="custom-toast">
+    <text>{{toastContent}}</text>
+  </view>
+
+  <!-- 其他内容保持不变 -->
+  <view class="row" catchtap="noop">
+    <text>用户名</text>
+    <view class="right">
+      <block wx:if="{{nickEditing}}">
+        <input value="{{nick}}"
+               bindinput="onNickChange"
+               placeholder="请输入新昵称"
+               confirm-type="done"
+               bindconfirm="confirmUpdateNick"
+               focus="true"
+               class="edit-input" />
+      </block>
+      <block wx:else>
+        <text class="static-text" bindtap="nickChangeToEdit">{{nick || '未设置'}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="row" catchtap="noop">
+    <text>床号</text>
+    <view class="right">
+      <block wx:if="{{bedIdEditing}}">
+        <input value="{{bedId}}"
+               bindinput="onbedIdChange"
+               placeholder="请输入床号"
+               confirm-type="done"
+               bindconfirm="confirmUpdatebedId"
+               focus="true"
+               class="edit-input" />
+      </block>
+      <block wx:else>
+        <text class="static-text" bindtap="bedIdChangeToEdit">{{bedId || '未绑定'}}</text>
+        <image src="/images/component/arrow_right.png" class="arrow-right" />
+      </block>
+    </view>
+  </view>
+
+</view>
+
+<view class="logout-fixed">
+  <view class="button-group">
+    <!-- 底部只保留“退出登录”按钮，移除了“返回”按钮 -->
+    <view class="action-button logout-button" bindtap="logout">退出登录</view>
+  </view>
+</view>

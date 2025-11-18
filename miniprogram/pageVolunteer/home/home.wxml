@@ -1,0 +1,81 @@
+<view class="container">
+    <view class="custom-navbar">
+        <image class="navbar-avatar" src="{{homePageAvatar || '/images/mine/default.png'}}" bindtap="openMineDrawer" />
+        <text class="navbar-title">小福播客</text>
+    </view>
+
+    <view class="banner-swiper">
+        <swiper autoplay circular indicator-dots class="swiper-inner">
+            <block wx:for="{{bannerImages}}" wx:key="index">
+                <swiper-item>
+                    <image src="{{item}}" mode="aspectFill" class="swiper-image" />
+                </swiper-item>
+            </block>
+        </swiper>
+    </view>
+
+    <scroll-view class="scrollable-content" scroll-y>
+        <view class="sign-in-card">
+            <view class="sign-in-header">
+                <image src="/images/icons/sign_in_icon.png" class="sign-in-icon"></image>
+                <text class="sign-in-title">每日签到</text>
+                <text class="sign-in-note-count">音符总数：{{noteTotal}}</text>
+            </view>
+            <view class="sign-in-info">
+                <text class="sign-in-status">{{hasSignedInToday ? '今日已签到' : '今日未签到'}}</text>
+                <text class="sign-in-streak">连续签到：{{streak}}天</text>
+            </view>
+            <button class="sign-in-button" disabled="{{hasSignedInToday}}" bindtap="autoSignIn">
+                {{hasSignedInToday ? '已签到' : '签到'}}
+            </button>
+        </view>
+
+        <view class="section-title-container">
+            <text class="section-title">活动专区</text>
+            <navigator url="/pages/activity_list/activity_list" class="view-more">查看更多 > </navigator>
+        </view>
+
+        <view class="activity-list">
+            <block wx:for="{{activityList}}" wx:key="_id">
+                <view class="activity-card" data-activity-id="{{item._id}}" data-index="{{index}}" bindtap="goToActivityPlayer">
+                    <image src="{{item.imageUrl}}" mode="aspectFill" class="activity-image"></image>
+                    <view class="activity-content">
+                        <text class="activity-type-tag {{item.type === '线上活动' ? 'online-tag' : 'offline-tag'}}">{{item.type}}</text>
+                        <text class="activity-title">{{item.title}}</text>
+                        <view class="activity-time">
+                            <image src="/images/utils/time.png" class="icon-small"></image>
+                            <text>{{item.time_start}} - {{item.time_stop}}</text>
+                        </view>
+                        <view class="activity-address">
+                            <image src="/images/utils/address.png" class="icon-small"></image>
+                            <text>{{item.address}}</text>
+                        </view>
+                    </view>
+                    <button class="register-button">立即报名</button>
+                </view>
+            </block>
+        </view>
+    </scroll-view>
+
+
+    <view class="drawer-wrapper {{showDrawer ? 'show' : ''}}"
+          bindtap="closeDrawerByMask">
+        <mine-drawer
+            avatar="{{avatar}}"
+            nick="{{nick}}"
+            displayNick="{{displayNick}}"
+            logged="{{logged}}"
+            WaitingLog="{{WaitingLog}}"
+            noteCount="{{noteCount}}"
+            progress="{{progress}}"
+            level="{{level}}"
+            welcomeText="{{welcomeText}}"
+            bannerImageUrl="{{bannerImageUrl}}"
+            refreshSignins="{{refreshSignins}}"
+            bindrefreshcomplete="onRefreshSigninsComplete"
+            binduserloginsuccess="onUserLoginSuccess"
+            binduserlogout="onUserLogout"
+            catchtap="doNothing"
+        ></mine-drawer>
+    </view>
+</view>

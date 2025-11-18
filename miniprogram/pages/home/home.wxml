@@ -1,0 +1,60 @@
+<view class="container">
+  <view class="custom-navbar">
+    <image class="navbar-avatar" src="{{homePageAvatar || '/images/mine/default.png'}}" bindtap="openMineDrawer" />
+  </view>
+
+  <view class="content">
+    <swiper autoplay circular indicator-dots class="banner-swiper">
+      <block wx:for="{{bannerImages}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" mode="aspectFill" class="swiper-image" />
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <scroll-view class="scrollable-content" scroll-y>
+        <view class="activity-list">
+            <block wx:for="{{activityList}}" wx:key="_id">
+                <image
+                    class="activity-item-image"
+                    src="{{item.imageUrl}}"
+                    mode="aspectFit"
+                    data-index="{{index}}"
+                    bindtap="goToActivityPlayer"
+                />
+            </block>
+        </view>
+    </scroll-view>
+  </view>
+</view>
+
+<view class="popup-mask" wx:if="{{showPopup}}" catchtap="closePopup">
+  <view class="popup-content" style="background-image: url({{popupImage}});">
+    <view class="popup-bottom-content">
+      <image class="popup-week" src="{{popupWeekImage}}" mode="heightFix" />
+      <text class="popup-text">小Fu说，今天也是加油的一天哟~</text>
+    </view>
+  </view>
+</view>
+
+<view class="drawer-wrapper {{showDrawer ? 'show' : ''}}"
+      style="transform: translateX({{drawerTransform}});"
+      bindtap="closeDrawerByMask">
+  <mine-drawer
+    avatar="{{avatar}}"
+    nick="{{nick}}"
+    displayNick="{{displayNick}}"
+    logged="{{logged}}"
+    WaitingLog="{{WaitingLog}}"
+    noteCount="{{noteCount}}"
+    progress="{{progress}}"
+    level="{{level}}"
+    welcomeText="{{welcomeText}}"
+    bannerImageUrl="{{bannerImageUrl}}"
+    refreshSignins="{{refreshSignins}}"
+    bindrefreshcomplete="onRefreshSigninsComplete"
+    binduserloginsuccess="onUserLoginSuccess"
+    binduserlogout="onUserLogout"
+    catchtap="doNothing"
+  ></mine-drawer>
+</view>

@@ -1,0 +1,193 @@
+/* pages/mine/mine.wxss */
+
+/* 侧拉抽屉组件本身的宽度（如果此文件是 mine.wxss，且 mine 是组件） */
+mine-drawer {
+  width: 75vw; /* 调整这里的宽度来控制侧拉抽屉占据屏幕的百分比 */
+  height: 100vh;
+  background-color: #eeeeee; /* 整体背景色 */
+  /* box-shadow 等样式如果需要，可以放在这里 */
+}
+
+.container {
+  /* width: 100%; 这是 mine-drawer 已经控制了，此处一般不需要再设置 */
+  height: 100%; /* 确保容器撑满 mine-drawer 的高度 */
+  background-color: #eeeeee; /* 如果 mine-drawer 没有设背景色，这里可以作为 fallback */
+  overflow-y: auto; /* 允许组件内容滚动，以防内容超出屏幕高度 */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 顶部图片区域 */
+.top-banner {
+  position: relative;
+  height: 30vh;
+  width: 100%;
+}
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* 确保图片完整填充 */
+}
+
+/* 用户区域 */
+.avatar-box {
+  position: absolute;
+  bottom: 80rpx;
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  z-index: 1000; /* 确保在其他元素之上 */
+}
+
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 2rpx solid #fff;
+  margin-right: 20rpx;
+  background-color: #eee; /* 默认背景 */
+}
+
+.nickname {
+  font-size: 32rpx;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 1rpx 1rpx 2rpx rgba(0, 0, 0, 0.5); /* 增加可读性 */
+  margin-right: 15rpx; /* 给二维码图标留出空间 */
+}
+
+.qrcode-icon {
+  width: 48rpx; /* 图标大小 */
+  height: 48rpx;
+  vertical-align: middle; /* 垂直居中对齐 */
+}
+
+/* 欢迎块 */
+.welcome-block {
+  width: 90%;
+  background: #ffffff;
+  margin: -50rpx auto 20rpx; /* auto 使容器水平居中 */
+  padding: 20rpx;
+  border-radius: 20rpx;
+  z-index: 100;
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;  /* 垂直排列内部区域 */
+  justify-content: space-between; /* 在区域之间平均分配空间 */
+}
+
+/* 内部区域的基础样式 */
+.top-area, .middle-area, .bottom-area {
+  width: 100%;
+  display: flex;
+}
+
+.top-area {
+  justify-content: flex-start; /* 欢迎文字左对齐 */
+  margin-bottom: 15rpx; /* 顶部区域和中部区域之间的间距 */
+}
+
+.middle-area {
+  justify-content: space-between; /* 音符信息和签到文字左右分散对齐 */
+  align-items: center; /* 垂直居中对齐音符信息和签到文字 */
+  margin-bottom: 15rpx; /* 中部区域和底部区域之间的间距 */
+}
+
+.bottom-area {
+  align-items: center; /* 进度条容器垂直居中（如果需要） */
+}
+
+.welcome-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #222;
+}
+
+.note-info {
+  display: flex;
+  align-items: center; /* 音符数量和图标垂直居中 */
+}
+
+.note-count {
+  font-size: 36rpx; /* 增大音符数量的字体大小 */
+  font-weight: bold;
+  color: #222;
+  margin-right: 8rpx; /* 音符数量和图标之间的间距 */
+}
+
+.note-icon {
+  width: 32rpx; /* 图标宽度 */
+  height: 32rpx; /* 图标高度 */
+}
+
+.signin-text {
+  font-size: 24rpx; /* 签到文字字体大小 */
+  color: #007bff; /* 可以根据设计调整颜色 */
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 12rpx;
+  background-color: #f0f0f0;
+  border-radius: 6rpx;
+  overflow: hidden; /* 隐藏超出部分的进度条 */
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4CAF50; /* 绿色进度 */
+  border-radius: 6rpx;
+  transition: width 0.3s ease; /* 进度条宽度变化时的动画效果 */
+}
+
+.feature-list {
+  width: 100%; /* 占据父容器的全部宽度 */
+  display: flex;
+  flex-direction: column; /* 让每个 feature-item 垂直堆叠 */
+  background-color: #ffffff; /* 列表背景色 */
+  margin-top: 20rpx; /* 与上方欢迎块的间距 */
+  box-shadow: 0 6rpx 12rpx rgba(0, 0, 0, 0.05); /* 阴影效果 */
+  border-radius: 20rpx; /* 圆角 */
+  overflow: hidden; /* 防止内容溢出圆角 */
+}
+
+.feature-item {
+  display: flex; /* 让图标和文字水平排列 */
+  align-items: center; /* 垂直居中对齐图标和文字 */
+  padding: 25rpx 30rpx; /* 上下内边距增加，左右内边距留出空间 */
+  width: 100%; /* 确保每个条目占据整行宽度 */
+  box-sizing: border-box; /* 内边距不增加实际宽度 */
+  border-bottom: 1rpx solid #f0f0f0; /* 每个条目下方的分割线 */
+}
+
+/* 移除最后一个条目的下边框，避免多余分割线 */
+.feature-item:last-child {
+  border-bottom: none;
+}
+
+.feature-icon {
+  width: 50rpx; /* 图标大小适中 */
+  height: 50rpx;
+  margin-right: 25rpx; /* 图标和文字之间的间距 */
+  flex-shrink: 0; /* 防止图标被压缩 */
+}
+
+.feature-label {
+  font-size: 30rpx; /* 增大文字大小 */
+  color: #333;
+  flex-grow: 1; /* 文字占据剩余空间，实现左对齐 */
+}
+
+/* 登录中提示 */
+.waiting-toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 24rpx 40rpx;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  z-index: 9999;
+  text-align: center;
+}

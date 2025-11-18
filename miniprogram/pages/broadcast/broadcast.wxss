@@ -1,0 +1,257 @@
+/* 全局页面容器 */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 水平居中内容 */
+    justify-content: space-between; /* 垂直方向分散对齐 */
+    height: 100vh; /* 占据整个视口高度 */
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    padding: 40rpx 0; /* 顶部和底部留白 */
+    box-sizing: border-box; /* 包含 padding 在内的高度计算 */
+    overflow: hidden; /* 防止内容溢出 */
+  }
+  
+  /* 轮播图容器 */
+  .audio-swiper {
+    width: 100vw; /* 占据整个视口宽度 */
+    height: 60vh; /* 占据页面中上部大部分高度 */
+    margin-top: 0; /* 紧贴顶部，或根据需要调整 */
+    display: flex; /* 让 swiper-item 居中显示 */
+    align-items: center; /* 垂直居中 swiper-item */
+  }
+  
+  /* 轮播单项 */
+  .swiper-item {
+    display: flex;
+    justify-content: center; /* 水平居中图片 */
+    align-items: center; /* 垂直居中图片 */
+    overflow: hidden; /* 确保图片不溢出 */
+  }
+  
+  /* 歌曲封面图片 */
+  .audio-cover {
+    width: 400rpx; /* 封面宽度 */
+    height: 400rpx; /* 封面高度 */
+    border-radius: 50%; /* 圆形封面 */
+    box-shadow: 0 10rpx 20rpx rgba(0, 0, 0, 0.2); /* 阴影效果 */
+    animation: rotate 20s linear infinite; /* 默认旋转动画 */
+    animation-play-state: paused; /* 默认暂停旋转 */
+  }
+  
+  /* 播放时图片旋转 */
+  .audio-cover.playing {
+    animation-play-state: running; /* 播放时启动旋转 */
+  }
+  
+  /* 图片旋转动画 */
+  @keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* 歌曲信息（名称） */
+  .song-info {
+    width: 100%;
+    text-align: center;
+    margin-top: 40rpx; /* 与图片之间留白 */
+    padding: 0 40rpx;
+    box-sizing: border-box;
+  }
+  
+  .song-title {
+    font-size: 44rpx; /* 歌曲名称字体大小 */
+    font-weight: bold;
+    color: rgb(219, 219, 219);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* 进度条区域 */
+  .progress-section {
+    display: flex;
+    align-items: center;
+    width: 90%; /* 进度条宽度 */
+    margin-top: 40rpx; /* 与歌曲名称之间留白 */
+  }
+  
+  .current-time,
+  .total-time {
+    font-size: 28rpx;
+    color: #666;
+    width: 100rpx; /* 固定时间显示宽度 */
+    text-align: center;
+  }
+  
+  .audio-slider {
+    flex: 1; /* 占据剩余空间 */
+    margin: 0 20rpx; /* 左右留白 */
+    height: 40rpx; /* 增加滑块区域高度，方便点击 */
+  }
+  
+  /* 底部控制按钮区域 */
+  .controls-bottom {
+    margin-top: 40rpx; /* 与进度条之间留白 */
+    margin-bottom: 20rpx; /* 与底部小点之间留白 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;
+  }
+  
+  /* 播放/暂停按钮 (精简样式，只为容器做少量调整) */
+  .play-pause-btn {
+    /* 移除圆形、背景色、阴影等自定义样式 */
+    width: 120rpx; /* 按钮尺寸，以适应内部图标 */
+    height: 120rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* 移除默认内边距 */
+    background-color: transparent; /* 背景透明，使用小程序默认按钮样式，或不设置 */
+    border: none; /* 移除边框，使用小程序默认按钮样式，或不设置 */
+    outline: none; /* 移除焦点轮廓 */
+  }
+  
+  /* 按钮图标样式 */
+  .play-pause-icon {
+    width: 100%; /* 让图片占据按钮的全部宽度 */
+    height: 100%; /* 让图片占据按钮的全部高度 */
+  }
+  
+  /* 底部小点指示器 */
+  .indicator-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: auto; /* 将指示器推到底部 */
+    margin-bottom: 40rpx; /* 与页面底部留白 */
+  }
+  
+  .dot {
+    width: 16rpx;
+    height: 16rpx;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 8rpx;
+    transition: all 0.3s ease; /* 平滑过渡效果 */
+  }
+  
+  .dot.active-dot {
+    width: 24rpx; /* 选中时放大 */
+    height: 24rpx;
+    background-color: #333; /* 选中时变黑 */
+  }
+  .container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3); /* 可调整深浅 */
+    z-index: 1;
+  }
+  
+  /* 所有内容上浮 */
+  .audio-swiper,
+  .song-info,
+  .progress-section,
+  .controls-bottom,
+  .indicator-dots {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+  }
+  
+  .overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.2); /* 可调节背景对比 */
+    z-index: 1;
+  }
+  
+  /* 👇 虚化下半部分背景 */
+  .blur-mask {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: linear-gradient(to top, rgba(255,255,255,0.3), rgba(255,255,255,0));
+    pointer-events: none; /* 不阻挡操作 */
+  }
+  
+  .custom-navbar {
+    position: fixed; /* 固定在顶部 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 88px; /* 固定总高度，例如：状态栏44px + 内容区44px */
+    background-color: #fff; /* 白色背景，与订单页面一致 */
+    display: flex;
+    /* 关键：使用 padding-top 为状态栏预留空间，让内容区从44px开始 */
+    padding-top: 44px; /* 假设状态栏高度为44px，为iPhone刘海屏预留 */
+    box-sizing: border-box; /* 确保 padding 包含在 height 内 */
+    
+    /* 调整这里：让导航栏的实际内容（返回按钮和标题）在水平和垂直方向上居中 */
+    align-items: center;   /* 使 flex 子项（图片和文本）在 flex 容器（导航栏内容区）中垂直居中 */
+    justify-content: center; /* 使 flex 子项在 flex 容器中水平居中 (主要是标题) */
+    
+    padding-left: 30rpx; /* 保持左侧内边距 */
+    padding-right: 30rpx; /* 保持右侧内边距 */
+    z-index: 100; /* 确保在其他内容之上，防止被覆盖 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 细微阴影 */
+    /* 移除原本的半透明深色背景和复杂的 padding-bottom */
+  }
+  
+  /* 返回按钮 */
+  .back-button { /* 注意：这里类名从 back-arrow 改为 back-button，与 WXML 对应 */
+    position: absolute; /* 绝对定位 */
+    left: 30rpx; /* 距离左侧边距 */
+    width: 48rpx; /* 返回图标的宽度 */
+    height: 48rpx; /* 返回图标的高度 */
+    padding: 10rpx; /* 增加点击区域，便于点击 */
+    
+    /* 关键调整：计算按钮的垂直位置，使其在 **导航栏内容区域** 垂直居中 */
+    /* 导航栏内容区域的高度是 (总高度 - padding-top) = (88px - 44px) = 44px */
+    /* 按钮高度 48rpx (小程序默认 2rpx = 1px，所以 48rpx = 24px) */
+    /* 所以，它距离整个 custom-navbar 顶部的距离就是 padding-top + (内容区高度 / 2) - (按钮高度 / 2) */
+    top: calc(44px + (44px / 2) - (48rpx / 2)); /* 44px(状态栏预留) + (44px/2 - 24rpx/2) (在内容区居中) */
+    /* 简化为常用的经验值，通常能让按钮在刘海屏下也显得居中且不被遮挡 */
+    /* top: 50px; 也可以直接用这个固定值，通常效果也不错 */
+    
+    flex-shrink: 0; /* 防止图标被压缩 */
+    z-index: 101; /* 确保在标题之上 */
+  }
+  
+  .navbar-title {
+    font-size: 36rpx; /* 与订单页面标题大小一致 */
+    font-weight: bold;
+    color: #333; /* 导航栏文字颜色 */
+    /* 标题因为 custom-navbar 的 justify-content: center 而水平居中，
+       因为 align-items: center 也会在 padding-top 后的区域垂直居中。
+       这里不需要额外的 flex-grow 或 line-height，除非你需要微调 */
+  }
+  

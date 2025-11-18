@@ -1,0 +1,54 @@
+<view class="cart-page">
+  <!-- 自定义Toast -->
+  <view class="custom-toast {{toastVisible ? 'show' : ''}}" wx:if="{{toastVisible}}">
+    {{toastContent}}
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="nav-bar">
+    <view class="back-btn" bindtap="goHome">
+      <text class="iconfont icon-home"></text>
+    </view>
+    <view class="title">购物车</view>
+  </view>
+
+  <!-- 购物车为空提示 -->
+  <view class="empty-cart" wx:if="{{cartList.length === 0}}">
+    <view class="empty-text">购物车还是空的</view>
+    <view class="go-shop-btn" bindtap="goHome">去点餐</view>
+  </view>
+
+  <!-- 购物车内容 -->
+  <view class="cart-content" wx:else>
+    <view class="cart-header">
+      <text class="cart-title">已选菜品</text>
+      <view class="clear-btn" bindtap="clearCart">清空</view>
+    </view>
+    
+    <view class="cart-list">
+      <view class="cart-item" wx:for="{{cartList}}" wx:key="index">
+        <image class="dish-image" src="{{item.imageUrl}}" mode="aspectFill"></image>
+        <view class="dish-info">
+          <view class="dish-name">{{item.name}}</view>
+          <view class="dish-count">
+            <view class="count-btn minus" bindtap="decreaseCount" data-index="{{index}}">-</view>
+            <view class="count-value">{{item.count}}</view>
+            <view class="count-btn plus" bindtap="increaseCount" data-index="{{index}}">+</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="remark-section">
+      <view class="remark-title">备注</view>
+      <textarea class="remark-input" placeholder="如有特殊需求，请在此填写" 
+                bindinput="onRemarkInput" value="{{remark}}"></textarea>
+    </view>
+  </view>
+
+  <!-- 提交订单按钮 -->
+  <view class="submit-btn {{cartList.length === 0 ? 'disabled' : ''}}" 
+        bindtap="{{cartList.length > 0 ? 'submitOrder' : ''}}">
+    <text>{{loading ? '提交中...' : '提交订单'}}</text>
+  </view>
+</view>

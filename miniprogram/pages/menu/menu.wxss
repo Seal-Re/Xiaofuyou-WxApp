@@ -1,0 +1,301 @@
+/* pages/orders/orders.wxss */
+
+/* Custom Navbar Styles */
+.custom-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 88px; /* 固定总高度，例如：状态栏44px + 内容区44px */
+  background-color: #fff;
+  display: flex;
+  /* 关键：使用 padding-top 为状态栏预留空间，让内容区从44px开始 */
+  padding-top: 44px; /* 假设状态栏高度为44px，为iPhone刘海屏预留 */
+  box-sizing: border-box; /* 确保 padding 包含在 height 内 */
+  
+  /* 调整这里：让导航栏的实际内容（返回按钮和标题）在水平和垂直方向上居中 */
+  align-items: center;   /* 使 flex 子项（图片和文本）在 flex 容器（导航栏内容区）中垂直居中 */
+  justify-content: center; /* 使 flex 子项在 flex 容器中水平居中 (主要是标题) */
+  
+  padding-left: 30rpx; /* 保持左侧内边距 */
+  padding-right: 30rpx; /* 保持右侧内边距 */
+  z-index: 100; /* 确保在其他内容之上，防止被覆盖 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* 细微阴影 */
+}
+
+/* 返回按钮 */
+.back-button {
+  position: absolute; /* 绝对定位 */
+  left: 30rpx; /* 距离左侧边距 */
+  width: 48rpx; /* 返回图标的宽度 */
+  height: 48rpx; /* 返回图标的高度 */
+  padding: 10rpx; /* 增加点击区域，便于点击 */
+  
+  /* 关键调整：计算按钮的垂直位置，使其在 **导航栏内容区域** 垂直居中 */
+  /* 导航栏内容区域的高度是 (总高度 - padding-top) = (88px - 44px) = 44px */
+  /* 要让一个 48rpx (~24px) 的元素在 44px 高的区域内垂直居中，
+     它的 top 距离内容区顶部应该是 (44px - 24px) / 2 = 10px */
+  /* 所以，它距离整个 custom-navbar 顶部的距离就是 padding-top + 10px */
+  top: calc(44px + 10px); /* 44px(状态栏预留) + 10px(在内容区居中) */
+  /* 更好的做法是，因为 custom-navbar 已经设置了 align-items: center，
+     理论上 back-button 只要不是 absolute 就会居中。
+     但因为它是 absolute，我们需要精确计算。
+     如果 back-button 自身高度是 48rpx (小程序默认 2rpx = 1px，所以 48rpx = 24px)，
+     那么它在 44px 高度内容区里垂直居中时，距离内容区顶部是 (44-24)/2 = 10px。
+     再加上状态栏的 44px，就是 54px。 */
+  /* 简化计算，直接使用固定的 top 值，通常这个值能覆盖大部分情况 */
+  /* 考虑到 48rpx 可能不是精确的 24px，或者不同设备像素比，我们可以稍微放宽 */
+  top: 50px; /* 这是一个常用的经验值，通常能让按钮在刘海屏下也显得居中且不被遮挡 */
+}
+
+/* 标题 */
+.navbar-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  /* 标题因为 custom-navbar 的 justify-content: center 而水平居中，
+     因为 align-items: center 也会在 padding-top 后的区域垂直居中。
+     这里不需要额外的 margin-top 或 top 属性，除非你需要微调 */
+}
+
+
+/* 全局容器样式 - 调整顶部内边距以适应固定导航栏 */
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    /* 关键调整: padding-top = 导航栏总高度 + 额外的20rpx间距 */
+    padding-top: calc(88px + 20rpx); /* 确保内容在导航栏下方显示 */
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    padding-bottom: 20rpx;
+    box-sizing: border-box;
+}
+
+/* --- 自定义Toast样式 --- */
+.custom-toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20rpx 30rpx;
+    border-radius: 10rpx;
+    font-size: 28rpx;
+    z-index: 1000;
+    text-align: center;
+}
+
+
+/* --- 空状态及按钮样式 --- */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+    padding: 50rpx;
+}
+
+.empty-image {
+    width: 300rpx;
+    height: 300rpx;
+    margin-bottom: 40rpx;
+    opacity: 0.7;
+}
+
+.empty-text {
+    font-size: 32rpx;
+    color: #999;
+    margin-bottom: 60rpx;
+}
+
+.action-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 20rpx 40rpx;
+    border-radius: 50rpx;
+    font-size: 32rpx;
+    width: 80%;
+    max-width: 400rpx;
+    box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+/* --- 订单列表容器样式 --- */
+.orders-scroll-view {
+    flex: 1; /* 让滚动视图填充可用空间 */
+    /* 关键调整：计算高度 = 100%视口高度 - 导航栏高度 - 容器的上下padding */
+    height: calc(100vh - 88px - 40rpx); /* 确保滚动视图有明确高度 */
+}
+
+.order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20rpx; /* 订单卡片之间的垂直间距 */
+}
+
+/* --- 订单卡片样式 --- */
+.order-card {
+    background-color: #fff;
+    border-radius: 16rpx;
+    padding: 30rpx;
+    box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20rpx;
+    padding-bottom: 15rpx;
+    border-bottom: 1rpx solid #eee;
+}
+
+.order-user-info {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: #333;
+}
+
+.order-bed-number {
+    font-size: 28rpx;
+    color: #666;
+    font-weight: bold;
+}
+
+/* --- 商品图片展示区域 --- */
+.order-items-display {
+    margin-bottom: 20rpx;
+}
+
+.item-images-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20rpx;
+    align-items: flex-start;
+    margin-bottom: 10rpx;
+}
+
+.item-image-box {
+    position: relative;
+    width: 180rpx;
+    height: 180rpx;
+    min-width: 180rpx;
+    min-height: 180rpx;
+    border-radius: 8rpx;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1rpx solid #f0f0f0;
+}
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.item-count-overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 26rpx;
+    padding: 6rpx 14rpx;
+    border-top-left-radius: 8rpx;
+    min-width: 40rpx;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.more-items-placeholder {
+    width: 180rpx;
+    height: 180rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0;
+    border-radius: 8rpx;
+    font-size: 30rpx;
+    color: #666;
+    flex-shrink: 0;
+    line-height: 1.2;
+    text-align: center;
+}
+.more-items-placeholder text {
+    display: block;
+}
+
+/* --- 订单底部样式 --- */
+.order-footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-top: 10rpx;
+    padding-top: 15rpx;
+    border-top: 1rpx solid #eee;
+}
+
+.order-footer-id {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left:0;
+    padding: 20rpx 30rpx;
+    background-color: #f0f0f0;
+    border-top: 1px solid #eee;
+
+    box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.1);
+    border-radius: 12rpx;
+}
+
+.order-time {
+    font-size: 26rpx;
+    color: #999;
+}
+.order-ID {
+    font-size: 26rpx;
+    color: #999;
+}
+.arrow-icon {
+    width: 32rpx;
+    height: 32rpx;
+}
+.loading-container {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    z-index: 1000;
+}
+
+.loading-gif {
+    width: 180rpx;
+    height: 180rpx;
+}
+
+.loading-text {
+    margin-top: 20rpx;
+    font-size: 36rpx;
+    font-weight: bold;
+    transition: color 0.5s ease-in-out;
+}
+
+.loading-text-color1 {
+    color: #f06292;
+}
+.loading-text-color2 {
+    color: #64b5f6;
+}
+.loading-text-color3 {
+    color: #81c784;
+}

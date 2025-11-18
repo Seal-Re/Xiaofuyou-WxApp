@@ -1,0 +1,27 @@
+<view class="container {{identity}}">
+  <!-- 未登录提示 -->
+  <view wx:if="{{!isLoggedIn}}" class="login-tip">
+    <text>您尚未登录，</text>
+    <button class="login-btn" bindtap="goToLogin">点击登录</button>
+  </view>
+
+  <!-- 已登录录音区 -->
+  <view wx:if="{{isLoggedIn}}">
+    <view class="recorder">
+
+      <!-- 动态录音条 -->
+      <view wx:if="{{recording}}" class="record-bar">
+        <view class="wave"></view>
+        <text class="recording-text">录音中…</text>
+      </view>
+
+      <!-- 控制按钮 -->
+      <button class="record-btn start" bindtap="startRecording" wx:if="{{!recording}}">
+        🎙️ 开始录音
+      </button>
+      <button class="record-btn stop" bindtap="stopRecording" wx:if="{{recording}}">
+        ⏹️ 停止并上传
+      </button>
+    </view>
+  </view>
+</view>

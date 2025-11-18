@@ -1,0 +1,89 @@
+/* 身份配色 */
+.container.baby {
+    background: linear-gradient(to bottom, #ffe4ec, #fff0f5);
+    min-height: 100vh;
+    padding: 40rpx;
+  }
+  
+  .container.parent {
+    background: linear-gradient(to bottom, #e0f0ff, #f0f8ff);
+    min-height: 100vh;
+    padding: 40rpx;
+  }
+  
+  /* 未登录提示 */
+  .login-tip {
+    text-align: center;
+    margin-top: 200rpx;
+    font-size: 32rpx;
+  }
+  
+  .login-btn {
+    margin-top: 20rpx;
+    background-color: #007aff;
+    color: #fff;
+    border-radius: 50rpx;
+    padding: 20rpx 60rpx;
+    box-shadow: 0 8rpx 20rpx rgba(0, 122, 255, 0.2);
+  }
+  
+  /* 录音按钮区 */
+  .recorder {
+    margin-top: 120rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40rpx;
+  }
+  
+  .record-btn {
+    padding: 24rpx 80rpx;
+    font-size: 32rpx;
+    border-radius: 60rpx;
+    font-weight: bold;
+    box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .record-btn.start {
+    background: linear-gradient(90deg, #ff7eb3, #ff758c);
+    color: white;
+  }
+  
+  .record-btn.stop {
+    background: linear-gradient(90deg, #87ceeb, #00bfff);
+    color: white;
+  }
+  
+  /* 录音条样式 */
+  .record-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20rpx;
+  }
+  
+  .wave {
+    width: 16rpx;
+    height: 16rpx;
+    border-radius: 50%;
+    background-color: #ff4d6d;
+    animation: waveAnim 1s infinite ease-in-out;
+    margin-right: 16rpx;
+  }
+  
+  @keyframes waveAnim {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.8;
+    }
+    50% {
+      transform: scale(1.8);
+      opacity: 0.3;
+    }
+  }
+  
+  .recording-text {
+    font-size: 28rpx;
+    color: #444;
+  }
+  

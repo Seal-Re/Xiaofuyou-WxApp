@@ -1,0 +1,28 @@
+/**app.wxss**/
+@import './miniprogram_npm/@vant/weapp/common/index.wxss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+} 
+
+button {
+  background: initial;
+}
+
+button:focus{
+  outline: 0;
+}
+
+button::after{
+  border: none;
+}
+
+
+page {
+  background: #eeeeee;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
