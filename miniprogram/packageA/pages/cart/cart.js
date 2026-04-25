@@ -127,7 +127,6 @@ Page({
       success: (res) => {
         // 根据模板ID获取用户订阅结果
         const subscribeStatus = res["R39av-2oWX4eNy6HzaEeSoK2Au3belmQ_KK8M4kYgqI"];
-        console.log("订阅消息结果：", subscribeStatus);
         // 如果用户点击“允许”或“总是保持以上选择”，则视为同意订阅
         this.processOrder(subscribeStatus === 'accept');
       },
@@ -166,7 +165,6 @@ Page({
         }
       });
   
-      console.log('云函数创建订单结果：', res);
   
       if (res.result && res.result.success) {
 

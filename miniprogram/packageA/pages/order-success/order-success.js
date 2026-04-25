@@ -9,7 +9,6 @@ Page({
   
     onLoad: function () {
       const lastOrder = wx.getStorageSync("lastOrder") || {};
-      console.log(lastOrder);
       this.setData({
         orderTime: new Date().toLocaleString(),
         orderItems: lastOrder.items || [],

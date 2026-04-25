@@ -55,10 +55,8 @@ Component({
         // 那么 properties.logged 会是 true，这里会首次加载签到数据。
         // 如果是作为 Tab 页面首次加载，pageLifetimes.show 会处理数据同步。
         if (this.properties.logged) {
-          console.log('MineComponent: attached, logged is true, loading signins.');
           this.loadUserSignins(true);
         } else {
-            console.log('MineComponent: attached, logged is false. Will wait for syncDataFromGlobal or parent prop change.');
         }
         this.getBannerImage(); // 在组件 attached 时获取 banner
       },
@@ -70,12 +68,10 @@ Component({
     pageLifetimes: {
         show() {
             // **关键修改：当 mine.js 作为独立 Tab 页面显示时，主动同步全局数据。**
-            console.log(`[Mine Page onShow] ${this.route} 页面显示，准备更新 TabBar 和同步用户数据`);
             if (typeof this.getTabBar === 'function' && this.getTabBar()) {
                 const tabBar = this.getTabBar();
                 tabBar.updateIndicatorState();
                 tabBar.setSelected(1); // 假设 Mine 是第二个 Tab (index 1)
-                console.log('[Mine Page onShow] TabBar updateIndicatorState and setSelected 已调用');
             } else {
                 console.warn('[Mine Page onShow] 无法获取自定义 TabBar 实例');
             }
@@ -84,7 +80,6 @@ Component({
         },
         hide() {
             // 组件所在的页面被隐藏时执行
-            console.log('[Component pageLifetimes.hide] /pageVolunteer/mine/mine 所在的页面隐藏');
         }
     },
     // =========================================================
@@ -97,18 +92,15 @@ Component({
         // 如果 `mine` 作为页面，`logged` 属性不会被外部改变，它的 `logged` 状态由 `syncDataFromGlobal` 更新到其自身 `data` 中。
         // 但这里我们还是通过 properties 变化来响应，以支持组件模式。
         if (newVal && !oldVal) {
-          console.log('MineComponent: logged属性变为true (来自父组件或内部set)，加载签到数据');
           // 确保这里使用最新的 userId
           this.loadUserSignins(true);
           this.calculateNoteStats(app.globalData.userId); // 确保使用全局 userId
         } else if (!newVal && oldVal) {
-          console.log('MineComponent: logged属性变为false (来自父组件或内部set)，清空签到数据');
           this.resetUserDataDisplay(); // 重置显示相关数据
         }
       },
       'refreshSignins': function(newVal) {
         if (newVal && this.properties.logged) { // 确保 logged 为 true 才刷新
-          console.log('MineComponent: 接收到刷新签到列表指令 (来自父组件)');
           this.loadUserSignins(true);
           // 通知父组件刷新完成，这样父组件可以把 refreshSignins 设回 false
           this.triggerEvent('refreshComplete');
@@ -124,7 +116,6 @@ Component({
       // **新增方法：从 globalData 同步数据到组件自身 data**
       syncDataFromGlobal() {
         const globalData = app.globalData;
-        console.log('MineComponent: syncDataFromGlobal called. Current globalData:', globalData);
 
         const newLoggedStatus = !!globalData.userId; // 检查 userId 确定登录状态
 
@@ -144,7 +135,6 @@ Component({
         } else {
             this.resetUserDataDisplay(); // 清空显示相关数据
         }
-        console.log('MineComponent: syncDataFromGlobal complete. Current internal data:', this.data);
       },
 
       // **新增方法：重置用户数据在组件中的显示状态**
@@ -173,7 +163,6 @@ Component({
         const self = this;
         // 检查全局登录状态，避免重复登录
         if (self.data.WaitingLog || (app.globalData.logged && app.globalData.userId)) {
-            console.log("MineComponent: 已在登录中或已登录，跳过手动登录");
             return;
         }
 
@@ -249,7 +238,6 @@ Component({
 
       // **新增登出方法：确保清除全局数据并重置组件自身显示**
       async logout() {
-          console.log('MineComponent: 登出操作');
           const currentUsercase = app.globalData.usercase;
 
           // 清空全局数据
@@ -311,7 +299,6 @@ Component({
               progress: `${progressPercent}%`,
               welcomeText: `小Fu ${level}级超级英雄`
             });
-            console.log('MineComponent: Note stats calculated and updated:', { totalNotes, level, progressPercent });
         } catch (error) {
             console.error('MineComponent: Failed to calculate note stats:', error);
         }
@@ -331,7 +318,6 @@ Component({
 
           if (typeof bannerUrl === 'string' && bannerUrl.startsWith('http')) {
             this.setData({ bannerImageUrl: bannerUrl }); // 这里更新的是组件自身的 bannerImageUrl
-            console.log('MineComponent: Banner图片URL获取成功:', bannerUrl);
           } else {
             console.error('MineComponent: 云函数返回的banner图片URL无效或不是字符串。实际返回:', bannerRes.result);
             this.setData({ bannerImageUrl: '/images/banner/default_banner.png' });
@@ -368,12 +354,10 @@ Component({
       // 加载用户签到记录的函数
       async loadUserSignins(reset = false) {
         if (this.data.isLoading || (!this.data.hasMore && !reset)) {
-          console.log("MineComponent: 正在加载或没有更多数据了，跳过请求。");
           return;
         }
 
         if (!app.globalData.userId) {
-          console.log("MineComponent: 用户未登录，无法加载签到记录。");
           // 如果未登录，并且不是重置操作，不需要清空数据，因为resetUserDataDisplay会处理
           return;
         }
@@ -412,7 +396,6 @@ Component({
             hasMore: oldSignins.length + newSignins.length < total,
           });
 
-          console.log(`MineComponent: 加载了 ${newSignins.length} 条数据，当前总数：${this.data.userSignins.length}，还有更多：${this.data.hasMore}`);
 
         } catch (e) {
           console.error("MineComponent: 加载签到记录失败：", e);
@@ -424,7 +407,6 @@ Component({
       },
 
       onReachBottom() {
-        console.log('MineComponent: 组件内部触底事件被触发，尝试加载更多...');
         // 确保当 mine 作为独立页面时，也能响应触底事件加载更多签到记录
         if (this.data.logged) { // 只有在登录状态下才加载
             this.loadUserSignins();

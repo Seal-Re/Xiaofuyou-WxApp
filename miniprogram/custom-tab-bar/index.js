@@ -17,7 +17,6 @@ Component({
     },
   
     attached() {
-      console.log('[TabBar Debug] Component attached.');
       // 首次加载时，仍然需要根据全局 indicator 初始化 TabBar 的列表类型
       // 但不在此刻设置 selected，selected 应该由当前页面的 onShow 触发
       this.updateIndicatorState(); // 调用一个新的方法，只更新 indicator
@@ -25,16 +24,13 @@ Component({
   
     pageLifetimes: {
       show() {
-        console.log('[TabBar Debug] Page containing TabBar showed.');
         // 页面显示时，确保 TabBar 的列表类型 (indicator) 是正确的
         this.updateIndicatorState();
         // 注意：这里不调用 updateState 来设置 selected，而是由页面 onShow 负责
       },
       hide() {
-        console.log('[TabBar Debug] Page containing TabBar hidden.');
       },
       resize() {
-        console.log('[TabBar Debug] Page containing TabBar resized.');
       }
     },
   
@@ -46,7 +42,6 @@ Component({
             this.setData({
                 indicator: currentGlobalIndicator
             }, () => {
-                console.log(`[TabBar Debug] updateIndicatorState: Component Indicator is now ${this.data.indicator}`);
             });
         }
       },
@@ -58,14 +53,12 @@ Component({
             this.setData({
                 selected: index
             }, () => {
-                console.log(`[TabBar Debug] setSelected: Component Selected is now ${this.data.selected}`);
             });
         }
       },
 
       switchTab(e) {
         const { path, index } = e.currentTarget.dataset;
-        console.log(`[TabBar Debug] User clicked Tab: Path=${path}, Index=${index}.`);
         
         // **核心点：立即更新组件内部的 selected 状态，提供即时视觉反馈**
         this.setData({

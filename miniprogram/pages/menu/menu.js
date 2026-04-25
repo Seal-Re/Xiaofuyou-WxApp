@@ -15,11 +15,9 @@ Page({
   },
 
   onLoad() {
-    console.log('Orders Page: onLoad triggered!');
   },
 
   onShow() {
-    console.log('Orders Page: onShow triggered!');
     this.checkLoginAndLoadOrders();
   },
 
@@ -31,19 +29,16 @@ Page({
   },
 
   async checkLoginAndLoadOrders() {
-    console.log('checkLoginAndLoadOrders: Start');
     this.setData({ loading: true });
 
     const userId = app.globalData.userId;
     if (userId) {
-      console.log('checkLoginAndLoadOrders: User ID exists:', userId);
       this.setData({
         userId: userId,
         isLoggedIn: true
       });
       await this.fetchUserOrders(userId);
     } else {
-      console.log('checkLoginAndLoadOrders: User not logged in. Clearing data.');
       this.setData({
         userId: '',
         isLoggedIn: false,
@@ -57,7 +52,6 @@ Page({
   },
 
   async fetchUserOrders(userId) {
-    console.log('fetchUserOrders: Calling cloud function with userId:', userId);
     try {
       const res = await wx.cloud.callFunction({
         name: 'quickstartFunctions',
@@ -67,9 +61,6 @@ Page({
         }
       });
 
-      console.log('--- 调试：云函数 quickstartFunctions -> fetchUserOrders 返回结果 ---');
-      console.log(res); 
-      console.log('---------------------------------');
 
       if (res.result && typeof res.result === 'object' && res.result.success) {
         let orders = res.result.orders || [];
@@ -79,7 +70,6 @@ Page({
           userName: currentUserNick,
           bedNumber: currentUserBedId
         });
-        console.log(`页面数据：userName=${this.data.userName}, bedNumber=${this.data.bedNumber}`);
         const fileIDsToConvert = new Set();
         orders.forEach(order => {
           if (order.items && Array.isArray(order.items)) {
@@ -101,9 +91,6 @@ Page({
             tempRes.fileList.forEach(file => {
               tempFileURLsMap[file.fileID] = file.tempFileURL;
             });
-            console.log('--- 调试：获取到的临时文件URL映射 ---');
-            console.log(tempFileURLsMap);
-            console.log('---------------------------------');
           } catch (tempErr) {
             console.error('获取临时文件URL失败：', tempErr);
             this.showCustomToast("部分图片可能无法加载，获取临时链接失败");
@@ -128,30 +115,19 @@ Page({
           updatedOrder.formattedCreateTime = this.formatTime(updatedOrder.createTime);
           return updatedOrder;
         });
-        console.log('--- 调试：最终处理后的订单列表 (包含临时URL) ---');
-        console.log('完整的 ordersList 数组：', orders);
         if (orders.length > 0) {
           orders.forEach((order, index) => {
-            console.log(`订单 ${index} (ID: ${order._id || 'N/A'}):`);
 
             const rawTime = order.createTime;
             const formattedTime = this.formatTime(rawTime);
-            console.log(`  原始时间:`, rawTime);
-            console.log(`  格式化后: ${formattedTime}`);
 
-            console.log(`  订单 ${index} 包含 ${order.items ? order.items.length : 0} 个商品项 (总数)。`);
             if (order.displayedItems && order.displayedItems.length > 0) {
-              console.log(`  订单 ${index} 的 displayedItems (${order.displayedItems.length} 个):`);
               order.displayedItems.forEach((item, itemIndex) => {
-                console.log(`    商品 ${itemIndex}: name=${item.name}, count=${item.count}, imageUrl=${item.imageUrl}`);
               });
             }
-            console.log(`  订单 ${index} 需要显示“等X件”占位符: ${order.showMorePlaceholder}`);
           });
         } else {
-          console.log('ordersList 为空，没有订单数据被前端接收到。');
         }
-        console.log('---------------------------------');
 
         this.setData({
           ordersList: orders,
@@ -160,7 +136,6 @@ Page({
         });
 
       } else {
-        console.log('fetchUserOrders: Cloud function returned failure or invalid format.');
         this.setData({
           ordersList: [],
           hasOrders: false,
@@ -249,15 +224,12 @@ Page({
     const order = e.currentTarget.dataset.order;
     if (order && order._id) {
 
-      console.log(order);
-      console.log(order._id);
 
       wx.navigateTo({
         url: `/pages/broadcast/broadcast`,
         success: function(res) {
           const eventChannel = res.eventChannel;
           eventChannel.emit('acceptOrderData', { order: order });
-          console.log('事件 acceptOrderData 已发出，携带订单数据:', order);
         },
         fail: function(err) {
           console.error('跳转到 broadcast 页面失败:', err);
