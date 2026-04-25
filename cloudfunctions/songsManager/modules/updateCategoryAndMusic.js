@@ -42,7 +42,6 @@ exports.main = async (event, context) => {
     // 获取被删除分类的 user_defined_id (id 字段)，用于删除相关歌曲
     let deletedCategoryUserIds = [];
     if (categoryChanges.delete && categoryChanges.delete.length > 0) {
-      console.log('--- 开始处理分类删除:', categoryChanges.delete);
       const getDeletedCategoriesPromises = categoryChanges.delete.map(_id =>
         db.collection('category').doc(_id).get()
       );
@@ -76,12 +75,10 @@ exports.main = async (event, context) => {
         }
       });
       results.category.delete = categoryChanges.delete;
-      console.log('--- 分类删除完成。');
     }
 
     // 处理歌曲删除 (非分类联动删除的部分，即手动删除的歌曲)
     if (songChanges.delete && songChanges.delete.length > 0) {
-      console.log('--- 开始处理歌曲删除:', songChanges.delete);
       const deleteSongPromises = songChanges.delete.map(_id =>
         db.collection('music').doc(_id).remove()
       );
@@ -92,14 +89,12 @@ exports.main = async (event, context) => {
         }
       });
       results.song.delete = songChanges.delete;
-      console.log('--- 歌曲删除完成。');
     }
 
     // --- 2. 处理添加操作 ---
 
     // 添加新分类及其下的歌曲
     if (categoryChanges.add && categoryChanges.add.length > 0) {
-      console.log('--- 开始处理分类添加:', categoryChanges.add);
       const addCategoryPromises = categoryChanges.add.map(async (catData) => {
         const { musicList, ...categoryDoc } = catData; // 提取 musicList，它将单独处理
         const addResult = await db.collection('category').add({ data: categoryDoc }); // add 方法需要 data: {} 结构
@@ -132,12 +127,10 @@ exports.main = async (event, context) => {
             results.errors.push(`添加分类失败: ${r.reason}`);
         }
       });
-      console.log('--- 分类添加完成。');
     }
 
     // 添加到现有分类的歌曲 (这部分歌曲在 Flask 后端已经被正确区分了)
     if (songChanges.add && songChanges.add.length > 0) {
-      console.log('--- 开始处理歌曲添加:', songChanges.add);
       const addSongPromises = songChanges.add.map(songData => {
         const { _id, ...songDoc } = songData; // 确保不传递前端的临时 _id
         return db.collection('music').add({ data: songDoc }); // add 方法需要 data: {} 结构
@@ -150,14 +143,12 @@ exports.main = async (event, context) => {
       });
       // 记录添加的歌曲信息，这里记录的可以是原始数据，也可以是数据库返回的 _id
       results.song.add.push(...songChanges.add.map(s => s.id || JSON.stringify(s))); 
-      console.log('--- 歌曲添加完成。');
     }
 
     // --- 3. 处理更新操作 ---
 
     // 更新分类
     if (categoryChanges.update && categoryChanges.update.length > 0) {
-      console.log('--- 开始处理分类更新:', categoryChanges.update);
       const updateCategoryPromises = categoryChanges.update.map(catData => {
         const { _id, musicList, ...updateDoc } = catData; // 提取 _id 和 musicList
         return db.collection('category').doc(_id).update({ data: updateDoc }); // update 方法需要 data: {} 结构
@@ -169,12 +160,10 @@ exports.main = async (event, context) => {
         }
       });
       results.category.update.push(...categoryChanges.update.map(c => c._id));
-      console.log('--- 分类更新完成。');
     }
 
     // 更新歌曲
     if (songChanges.update && songChanges.update.length > 0) {
-      console.log('--- 开始处理歌曲更新:', songChanges.update);
       const updateSongPromises = songChanges.update.map(songData => {
         const { _id, ...updateDoc } = songData; // 提取 _id
         return db.collection('music').doc(_id).update({ data: updateDoc }); // update 方法需要 data: {} 结构
@@ -186,7 +175,6 @@ exports.main = async (event, context) => {
         }
       });
       results.song.update.push(...songChanges.update.map(s => s._id));
-      console.log('--- 歌曲更新完成。');
     }
 
     // --- 4. 返回最终结果 ---
