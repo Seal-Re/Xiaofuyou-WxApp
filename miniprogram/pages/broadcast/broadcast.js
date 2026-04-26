@@ -19,11 +19,9 @@ Page({
                   data: { type: 'getImages', path: `songsBackground/${randomImage}` }
               })
           ]);
-          console.log('背景图云函数返回结果:', imageRes);
           this.setData({
               backgroundUrl: imageRes.result.url
           });
-          console.log('背景图获取成功:', imageRes.result.url);
       } catch (err) {
           console.error('获取背景图失败:', err);
       }
@@ -78,7 +76,6 @@ Page({
 
       // --- 音频事件监听 ---
       audioContext.onPlay(() => {
-          console.log('音频开始播放');
           const { currentPlayingIndex } = this.data;
           if (currentPlayingIndex !== null) {
               this.setData({
@@ -109,7 +106,6 @@ Page({
       });
 
       audioContext.onEnded(() => {
-          console.log('音频播放结束');
           const { currentPlayingIndex, audioList } = this.data;
           if (currentPlayingIndex !== null) {
               this.setData({
@@ -130,7 +126,6 @@ Page({
                   });
               } else {
                   // **这是修改点：如果是最后一首，则暂停并重置为第一首的索引，但不自动播放**
-                  console.log('播放列表已结束，自动暂停。');
                   this.setData({
                       currentPlayingIndex: 0 // 重置为第一首的索引，以便下次点击播放时从头开始
                   });
@@ -206,7 +201,6 @@ Page({
       }
       const seekTime = e.detail.value;
       audioContext.seek(seekTime);
-      console.log(`跳转到 ${seekTime} 秒`);
   },
 
   /**
@@ -229,7 +223,6 @@ Page({
               [`audioList[${currentPlayingIndex}].currentTimeRaw`]: 0,
               [`audioList[${currentPlayingIndex}].currentTime`]: '00:00'
           });
-          console.log('滑动切换：停止当前音频');
       }
 
       // 更新当前播放索引，并触发新音频的播放
@@ -261,7 +254,6 @@ Page({
           this.setData({
               [`audioList[${index}].isPlaying`]: false,
           });
-          console.log('音频暂停');
           return;
       }
 
@@ -273,14 +265,12 @@ Page({
               [`audioList[${currentPlayingIndex}].currentTimeRaw`]: 0,
               [`audioList[${currentPlayingIndex}].currentTime`]: '00:00'
           });
-          console.log('停止之前播放的音频');
       }
 
       // 设置新的音频源并播放
       const selectedAudio = audioList[index];
       audioContext.src = selectedAudio.fileID; // 设置音频源
       audioContext.play();
-      console.log(`开始播放音频: ${selectedAudio.name}, URL: ${selectedAudio.fileID}`);
 
       // 更新状态
       this.setData({
@@ -301,7 +291,6 @@ Page({
       if (audioContext) {
           audioContext.stop(); // 停止播放
           audioContext.destroy(); // 销毁实例
-          console.log('音频实例已销毁');
       }
   }
 });

@@ -63,8 +63,6 @@ Page({
                   path: dish.image
                 }
               });
-              console.log('提供的地址：', dish.image);
-              console.log('云函数返回的 URLs:', res);
               dish.imageUrl = res.result.success ? res.result.url : "/images/default.jpg";
             } catch (err) {
               console.error("图片获取失败", err);
@@ -101,12 +99,10 @@ Page({
       
       
     onShow: function () {
-        console.log(`[Page onShow] ${this.route} 页面显示，准备更新 TabBar`);
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
             const tabBar = this.getTabBar();
             tabBar.updateIndicatorState(); 
             tabBar.setSelected(1); 
-            console.log('[Page onShow] TabBar updateIndicatorState and setSelected 已调用');
         } else {
             console.warn('[Page onShow] 无法获取自定义 TabBar 实例');
         }

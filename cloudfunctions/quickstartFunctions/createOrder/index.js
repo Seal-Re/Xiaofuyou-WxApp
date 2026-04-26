@@ -49,7 +49,6 @@ exports.main = async (event, context) => {
     second: '2-digit'
   });
   
-  console.log(localTimeStr); // 应该输出北京时间
   
 
   // 4. 构建订单数据
@@ -97,7 +96,6 @@ exports.main = async (event, context) => {
           },
           miniprogramState: 'developer' // 可设为 'formal' 或 'trial'
         });
-        console.log('订阅消息发送成功');
       } catch (sendErr) {
         console.error('订阅消息发送失败：', sendErr);
       }
