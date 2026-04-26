@@ -36,7 +36,6 @@ Page({
   
         if (res.result && res.result.url) {
           const imageUrl = res.result.url;
-          console.log(imageUrl);
           this.setData({ qrCodeImage: imageUrl });
         } else {
           wx.showToast({

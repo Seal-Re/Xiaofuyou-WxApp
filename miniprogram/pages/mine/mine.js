@@ -44,17 +44,14 @@ Component({
   observers: {
     'refreshSignins': function(newVal) {
       if (newVal && this.properties.logged) {
-        console.log('MineComponent: 接收到刷新签到列表指令');
         this.loadUserSignins(true);
         this.triggerEvent('refreshComplete'); // 通知父组件刷新完成
       }
     },
     'logged': function(newVal, oldVal) {
       if (newVal && !oldVal) {
-        console.log('MineComponent: 登录状态变为true，加载签到数据');
         this.loadUserSignins(true);
       } else if (!newVal && oldVal) {
-        console.log('MineComponent: 登录状态变为false，清空签到数据');
         this.setData({
           userSignins: [],
           currentPage: 0,
@@ -76,7 +73,6 @@ Component({
       const app = getApp(); // 在组件中获取app实例
 
       if (self.data.WaitingLog || (self.properties.logged && app.globalData.userId)) {
-          console.log("MineComponent: 已在登录中或已登录，跳过手动登录");
           return;
       }
       
@@ -265,7 +261,6 @@ Component({
 
         if (typeof bannerUrl === 'string' && bannerUrl.startsWith('http')) {
           this.setData({ bannerImageUrl: bannerUrl }); // 这里更新的是组件自身的 bannerImageUrl
-          console.log('MineComponent: Banner图片URL获取成功:', bannerUrl);
         } else {
           console.error('MineComponent: 云函数返回的banner图片URL无效或不是字符串。实际返回:', bannerRes.result);
           this.setData({ bannerImageUrl: '/images/banner/default_banner.png' });
@@ -334,12 +329,10 @@ Component({
     // 加载用户签到记录的函数
     async loadUserSignins(reset = false) {
       if (this.data.isLoading || (!this.data.hasMore && !reset)) {
-        console.log("MineComponent: 正在加载或没有更多数据了，跳过请求。");
         return;
       }
 
       if (!getApp().globalData.userId) {
-        console.log("MineComponent: 用户未登录，无法加载签到记录。");
         return;
       }
 
@@ -377,7 +370,6 @@ Component({
           hasMore: oldSignins.length + newSignins.length < total,
         });
 
-        console.log(`MineComponent: 加载了 ${newSignins.length} 条数据，当前总数：${this.data.userSignins.length}，还有更多：${this.data.hasMore}`);
 
       } catch (e) {
         console.error("MineComponent: 加载签到记录失败：", e);
@@ -392,7 +384,6 @@ Component({
     onReachBottom() {
       // 如果 mine 组件作为抽屉，其 onReachBottom 可能不会被页面触发
       // 只有当 mine 组件的根元素有 scroll-y 且高度固定时，其内部滚动触底才有效
-      console.log('MineComponent: 组件内部触底事件被触发，尝试加载更多...');
       this.loadUserSignins();
     }
   }

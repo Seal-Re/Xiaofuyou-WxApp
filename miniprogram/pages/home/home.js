@@ -70,12 +70,10 @@ Page({
 
     // 页面显示/从后台回到前台时触发
     onShow() {
-        console.log(`[Page onShow] ${this.route} 页面显示，准备更新 TabBar`);
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
             const tabBar = this.getTabBar();
             tabBar.updateIndicatorState(); 
             tabBar.setSelected(0); 
-            console.log('[Page onShow] TabBar updateIndicatorState and setSelected 已调用');
         } else {
             console.warn('[Page onShow] 无法获取自定义 TabBar 实例');
         }
@@ -322,7 +320,6 @@ Page({
                             data: { type: 'getImages', path: activity.add_mp4 }
                         });
                         // 添加更详细的日志来检查 mp4Res.result 的内容
-                        console.log(`[getBabyActivities] 获取 ${activity.add_mp4} 的原始结果:`, mp4Res);
 
                         videoUrl = mp4Res.result && mp4Res.result.url;
                         if (!(typeof videoUrl === 'string' && videoUrl.startsWith('http'))) {
@@ -346,7 +343,6 @@ Page({
             const validActivities = processedActivities.filter(item => item.imageUrl || item.videoUrl);
 
             this.setData({ activityList: validActivities });
-            console.log('活动列表获取成功:', validActivities);
 
         } catch (err) {
             console.error('获取活动列表失败：', err);
@@ -382,7 +378,6 @@ Page({
             // 将数组转换为 JSON 字符串，并进行 URL 编码
             const audioDataString = encodeURIComponent(JSON.stringify(audiosToPlay));
 
-            console.log(`[goToActivityPlayer] 准备跳转，传递的音频数据字符串: ${audioDataString}`);
 
             wx.hideLoading();
 
@@ -391,7 +386,6 @@ Page({
                 wx.navigateTo({
                     url: `/pages/broadcast/broadcast?audioData=${audioDataString}`, // 直接通过 URL 参数传递
                     success: () => {
-                        console.log('成功跳转并传递音频数据到 broadcast 页面');
                     },
                     fail: (err) => {
                         console.error('跳转到播放页面失败：', err);
@@ -481,13 +475,11 @@ Page({
     // --- 监听 mine 组件事件的方法 ---
     // 监听 mine 组件的刷新完成事件
     onRefreshSigninsComplete() {
-        console.log('Home: Mine组件刷新完成，重置 refreshSignins');
         this.setData({ refreshSignins: false }); // 重置状态，等待下一次触发
     },
 
     // 监听 mine 组件的登录成功事件
     onUserLoginSuccess(e) {
-        console.log('Home: 接收到 Mine 组件的登录成功事件', e.detail);
         // 更新 app.globalData
         app.globalData.userId = e.detail.userId;
         app.globalData.nick = e.detail.nick;
@@ -511,7 +503,6 @@ Page({
 
     // 监听 mine 组件的登出事件
     onUserLogout() {
-        console.log('Home: 接收到 Mine 组件的登出事件');
 
         // 直接对 app.globalData 的每个属性进行修改
         app.globalData.openid = null;

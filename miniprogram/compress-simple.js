@@ -4,7 +4,6 @@ const childProcess = require('child_process');
 
 // 使用sips命令压缩图片（macOS自带）
 function compressImages() {
-  console.log('开始压缩图片...');
   
   // 创建目录
   if (!fs.existsSync('images/compressed')) {
@@ -33,7 +32,6 @@ function compressImages() {
       const originalSize = fs.statSync(file).size;
       const compressedSize = fs.statSync(outputPath).size;
       
-      console.log(`压缩 ${filename}: ${(originalSize / 1024).toFixed(2)}KB -> ${(compressedSize / 1024).toFixed(2)}KB (${(100 - compressedSize / originalSize * 100).toFixed(2)}% 减少)`);
     } catch (error) {
       console.error(`压缩 ${filename} 失败:`, error.message);
     }
@@ -55,13 +53,11 @@ function compressImages() {
       const originalSize = fs.statSync(file).size;
       const compressedSize = fs.statSync(outputPath).size;
       
-      console.log(`压缩图标 ${filename}: ${(originalSize / 1024).toFixed(2)}KB -> ${(compressedSize / 1024).toFixed(2)}KB (${(100 - compressedSize / originalSize * 100).toFixed(2)}% 减少)`);
     } catch (error) {
       console.error(`压缩图标 ${filename} 失败:`, error.message);
     }
   });
   
-  console.log('图片压缩完成!');
 }
 
 // 执行压缩

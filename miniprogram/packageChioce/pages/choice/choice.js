@@ -11,7 +11,6 @@ Page({
   },
 
   async onLoad() {
-    console.log('当前页面 onLoad');
     // 调用云函数获取图片URL
     await this.getCloudImages();
   },
@@ -26,7 +25,6 @@ Page({
         name: 'quickstartFunctions',
         data: { type: 'getImages', path: 'choice/background.png' }
       });
-      console.log('背景图云函数返回:', backgroundRes);
       // *** 核心修改部分 ***
       if (backgroundRes.result && backgroundRes.result.url) { // 检查 result 和 url 字段是否存在
         this.setData({
@@ -40,7 +38,6 @@ Page({
         name: 'quickstartFunctions',
         data: { type: 'getImages', path: 'choice/parent.jpg' }
       });
-      console.log('按钮1图片云函数返回:', button1Res);
       // *** 核心修改部分 ***
       if (button1Res.result && button1Res.result.url) {
         this.setData({
@@ -54,7 +51,6 @@ Page({
         name: 'quickstartFunctions',
         data: { type: 'getImages', path: 'choice/child.jpg' }
       });
-      console.log('按钮2图片云函数返回:', button2Res);
       // *** 核心修改部分 ***
       if (button2Res.result && button2Res.result.url) {
         this.setData({
@@ -68,7 +64,6 @@ Page({
         name: 'quickstartFunctions',
         data: { type: 'getImages', path: 'choice/volunteer.jpg' }
       });
-      console.log('按钮3图片云函数返回:', button3Res);
       // *** 核心修改部分 ***
       if (button3Res.result && button3Res.result.url) {
         this.setData({
@@ -90,13 +85,10 @@ Page({
 
     app.globalData.usercase = '1';
     app.globalData.indicator = 0;
-    console.log('设置全局用户身份为：1');
-    console.log(`尝试跳转到第一个身份页面，路径：${targetUrl}`);
 
     wx.switchTab({
       url: targetUrl,
       success(res) {
-        console.log('跳转到第一个身份页面成功', res);
       },
       fail(err) {
         console.error('跳转到第一个身份页面失败', err);
@@ -112,13 +104,10 @@ Page({
 
     app.globalData.usercase = '2';
     app.globalData.indicator = 0;
-    console.log('设置全局用户身份为：2');
-    console.log(`尝试跳转到第二个身份页面，路径：${targetUrl}`);
 
     wx.switchTab({
       url: targetUrl,
       success(res) {
-        console.log('跳转到第二个身份页面成功', res);
       },
       fail(err) {
         console.error('跳转到第二个身份页面失败', err);
@@ -134,13 +123,10 @@ Page({
 
     app.globalData.usercase = '3';
     app.globalData.indicator = 1;
-    console.log('设置全局用户身份为：3');
-    console.log(`尝试跳转到第三个身份页面，路径：${targetUrl}`);
 
     wx.switchTab({
       url: targetUrl,
       success(res) {
-        console.log('跳转到第三个身份页面成功', res);
       },
       fail(err) {
         console.error('跳转到第三个身份页面失败', err);

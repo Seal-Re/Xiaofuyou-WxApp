@@ -72,12 +72,10 @@ Page({
 
     // 页面显示/从后台回到前台时触发
     onShow() {
-        console.log(`[Page onShow] ${this.route} 页面显示，准备更新 TabBar`);
         if (typeof this.getTabBar === 'function' && this.getTabBar()) {
             const tabBar = this.getTabBar();
             tabBar.updateIndicatorState();
             tabBar.setSelected(0); // Assuming Home is the first Tab (index 0)
-            console.log('[Page onShow] TabBar updateIndicatorState and setSelected 已调用');
         } else {
             console.warn('[Page onShow] 无法获取自定义 TabBar 实例');
         }
@@ -89,7 +87,6 @@ Page({
     // 同步全局用户数据到页面data
     syncUserData() {
         const globalData = app.globalData;
-        console.log('Home: syncUserData called. Current globalData:', globalData);
 
         const newLoggedStatus = !!globalData.userId; // Ensure logged is a boolean based on userId presence
 
@@ -153,7 +150,6 @@ Page({
                 progress: `${progressPercent}%`,
                 welcomeText: `小Fu ${level}级音乐家`
             });
-            console.log('Home: Note stats calculated and updated:', { totalNotes, level, progressPercent });
         } catch (error) {
             console.error('Home: Failed to calculate note stats:', error);
         }
@@ -238,7 +234,6 @@ Page({
             const validActivities = processedActivities.filter(item => item.imageUrl);
 
             this.setData({ activityList: validActivities });
-            console.log('活动列表获取成功:', validActivities);
 
         } catch (err) {
             console.error('获取活动列表失败：', err);
@@ -248,7 +243,6 @@ Page({
 
     // 立即报名功能先置空，不需要跳转到播放页面
     goToActivityPlayer(e) {
-        console.log('点击了活动项，但报名功能暂未实现。', e.currentTarget.dataset.index);
         // 如果需要，可以在这里添加一个Toast提示用户
         wx.showToast({
             title: '报名功能待开发',
@@ -328,7 +322,6 @@ Page({
     // --- 监听 mine 组件事件的方法 ---
     // 监听 mine 组件的刷新完成事件
     onRefreshSigninsComplete() {
-        console.log('Home: Mine组件刷新完成，重置 refreshSignins');
         // It's crucial to set refreshSignins back to false *after* the mine component has processed it.
         // The observer in mine-component will trigger on true, then you reset it here.
         this.setData({ refreshSignins: false });
@@ -336,7 +329,6 @@ Page({
 
     // 监听 mine 组件的登录成功事件
     onUserLoginSuccess(e) {
-        console.log('Home: 接收到 Mine 组件的登录成功事件', e.detail);
         const { userId, nick, avatar, displayNick } = e.detail;
 
         // Update app.globalData with the latest info from the component
@@ -364,7 +356,6 @@ Page({
 
     // 监听 mine 组件的登出事件
     onUserLogout() {
-        console.log('Home: 接收到 Mine 组件的登出事件');
         const currentUsercase = app.globalData.usercase; // Preserve usercase if it's not reset on logout
         app.globalData.openid = null;
         app.globalData.userId = null;

@@ -10,24 +10,18 @@ Page({
   },
 
   onLoad(options) {
-    console.log('页面 onLoad 触发。');
   },
 
   onShow() {
-    console.log(`[Page onShow] ${this.route} 页面显示，准备更新 TabBar`);
     if (typeof this.getTabBar === 'function' && this.getTabBar()) {
         const tabBar = this.getTabBar();
         tabBar.updateIndicatorState(); 
         tabBar.setSelected(2); 
-        console.log('[Page onShow] TabBar updateIndicatorState and setSelected 已调用');
     } else {
         console.warn('[Page onShow] 无法获取自定义 TabBar 实例');
     }
-    console.log('页面 onShow 触发，进行身份和登录状态判定。');
 
     // --- 调试日志开始 ---
-    console.log('调试: app.globalData.userId:', app.globalData.userId);
-    console.log('调试: app.globalData.usercase:', app.globalData.usercase);
     // --- 调试日志结束 ---
 
     // --- 确定用户身份 (usercase) ---
@@ -36,13 +30,10 @@ Page({
 
     if (usercase === '1') {
       currentIdentity = 'baby';
-      console.log('用户身份设置为: baby (根据 usercase 1)');
     } else if (usercase === '2') {
       currentIdentity = 'parent'; // 示例：usercase 为 '2' 时设为 'parent'
-      console.log('用户身份设置为: parent (根据 usercase 2)');
     } else if (usercase === '3') {
       currentIdentity = 'admin'; // 示例：usercase 为 '3' 时设为 'admin'
-      console.log('用户身份设置为: admin (根据 usercase 3)');
     } else {
       console.warn(`未知或未设置的 usercase: ${usercase}。身份使用默认值: ${currentIdentity}`);
     }
@@ -58,7 +49,6 @@ Page({
         identity: currentIdentity, // 即使未登录也设置身份
         userId: '' // 确保页面的 userId 为空字符串
       });
-      console.log('用户未登录。身份设置为:', currentIdentity);
       // 你可以选择在这里显示提示或自动跳转到登录页
       // wx.showToast({ title: '请先登录', icon: 'none', duration: 2000 });
       // setTimeout(() => { this.goToLogin(); }, 2000); // 提示后自动跳转
@@ -68,7 +58,6 @@ Page({
         userId: globalUserId,
         isLoggedIn: true
       });
-      console.log('用户已登录。身份设置为:', currentIdentity, 'UserId:', globalUserId);
     }
   },
 
@@ -140,7 +129,6 @@ Page({
         cloudPath,
         filePath: tempFilePath
       });
-      console.log('文件上传成功:', uploadRes);
       wx.showToast({ title: '上传成功', icon: 'success' }); // 上传成功
 
       const getFileUrlRes = await wx.cloud.callFunction({
@@ -160,7 +148,6 @@ Page({
         this.setData({
           fileList: [...this.data.fileList, newFile]
         });
-        console.log('文件列表更新:', this.data.fileList);
       } else {
         console.warn('未能获取上传文件的临时URL:', getFileUrlRes.result);
       }
